@@ -1,3 +1,3 @@
 # My site
 
-![here it is](https://rajatvd.github.io)
+[here it is](https://rajatvd.github.io)
