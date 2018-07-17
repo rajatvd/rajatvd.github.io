@@ -9,8 +9,10 @@ layout: default
       <h1><a href="{{ site.baseurl }}{{ post.url }}">{{ post.title }}</a></h1>
 
       <div class="entry">
-        {{ post.excerpt }}
-		<img src="{{ post.image}}">
+	  	<figure style="margin: 20px auto; text-align: center;">
+	      <img src="{{ post.image}}" alt='missing' width='auto' style='margin:20px auto; display:inline-block' text-align='center'/>
+		</figure>
+		<p>{{ post.excerpt }}</p>
       </div>
 
       <a href="{{ site.baseurl }}{{ post.url }}" class="read-more">Read More</a>
