@@ -8,7 +8,7 @@ comments: true
 
 ---
 
-Google brain recently published a paper titled [Adversarial Repgrogramming of Neural Networks](https://arxiv.org/pdf/1806.11146.pdf) which caught my attention. It introduced a new kind of adversarial example for neural networks, those which could actually perform a useful task for the adversary as opposed to just fooling the attacked networked. The attack 'reprograms' a network designed for a particular task to perform a completely different one. The paper showed that popular ImageNet architectures like Inception and ResNets can be successfully reprogrammed to perform quite well in different tasks like counting squares, MNIST and CIFAR-10.
+Google brain recently published a paper titled [Adversarial Repgrogramming of Neural Networks](https://arxiv.org/pdf/1806.11146.pdf) which caught my attention. It introduced a new kind of adversarial example for neural networks, those which could actually perform a useful task for the adversary as opposed to just fooling the attacked network. The attack 'reprograms' a network designed for a particular task to perform a completely different one. The paper showed that popular ImageNet architectures like Inception and ResNets can be successfully reprogrammed to perform quite well in different tasks like counting squares, MNIST and CIFAR-10.
 
 I'm going to walk through the paper in this post, and also add some of my own small modifications to the work they presented in the paper. In particular, I experimented with a slightly different method of action of the adversarial program, different regularization techniques and also targeted different networks - ResNet 18 and AlexNet.
 
