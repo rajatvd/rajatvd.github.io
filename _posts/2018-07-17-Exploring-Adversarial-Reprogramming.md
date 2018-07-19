@@ -22,7 +22,7 @@ The gist of the reprogramming process is as follows:
 * Re-assign ImageNet labels to the labels of your target task. So for example, let 'great white shark' = 1 for MNIST, and so on. You can assign multiple ImageNet labels to the same adversarial label as well.
 * Add an 'adversarial program' image to your MNIST image and pass that through the Inception model. Map the outputs of Inception using the remapping you chose above to get your MNIST predictions.
 * Train only the adversarial program image on the remapped labels, while keeping the Inception weights frozen. 
-* Now you got yourself an MNIST classifier: Take an MNIST image, add on your trained adversarial program, run it through inception, and remap its labels to get predictions for MNIST.
+* Now you got yourself an MNIST classifier: Take an MNIST image, add on your trained adversarial program, run it through Inception, and remap its labels to get predictions for MNIST.
 
 The exact method of 'adding' the adversarial program is as follows. Since ImageNet models require a 224 x 224 image, we use that as the size of our program weights. Let's call the weights image $W$. A nonlinear activation is applied to the weights after masking out the centre 28x28 section, which is then replaced by the MNIST image. This is the image which is passed in to our ImageNet model. Let's define the mask with 0's in the centre 28x28 as $M$. The adversarial input to the ImageNet model $X_{adv}$ is:
 
@@ -134,7 +134,7 @@ I repeated the above experiment on CIFAR-10 using AlexNet instead of Resnet 18. 
 
 While we can keep chasing for percent points, note that CIFAR-10 is actually a bad example for demonstrating adversarial reprogramming, as the so called 'adversarial' inputs $X_{adv}$ aren't really adversarial in the sense that the CIFAR labels are highly related to the ImageNet labels which have been greedily mapped. For example, the above figure shows an 'adversarial' input of a CIFAR-10 truck which is classified by ResNet 18 as a 'trailer truck'. This isn't really an adversarial input as the image could be considered as one of a trailer truck. However, the examples for CIFAR discussed in the paper in which the CIFAR image is put in the centre with a masked label can be considered adversarial, as a large part of these images cannot be interpreted meaningfully.
 
-## Testing Transference
+## Testing Transferability
 
 Another interesting thing to look at is whether these adversarial programs successfully transfer between different neural networks. In my experiments, it seemed that this was not the case. I tried using the MNIST adversarial program trained using ResNet 18 on AlexNet, and found that almost all the images were classified as 'jigsaw puzzles' irrespective of the digit they contained. Similar was the case for other ResNets like ResNet 34 and ResNet 50. 
 
