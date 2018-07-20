@@ -2,19 +2,24 @@
 layout: post
 title: Exploring Adversarial Reprogramming
 watch: true
-excerpt: Google brain recently published a paper titled <a href="https://arxiv.org/pdf/1806.11146.pdf">Adversarial Repgrogramming of Neural Networks</a> which caught my attention. I explore the ideas of the paper and perform some of my own experiments in this post.
+excerpt: Google brain recently published a paper titled <a href="https://arxiv.org/pdf/1806.11146.pdf">Adversarial Reprogramming of Neural Networks</a> which caught my attention. I explore the ideas of the paper and perform some of my own experiments in this post.
 image: /images/adv_reprog/cover_5iscat.png
 comments: true
 
 ---
 
-Google brain recently published a paper titled [Adversarial Repgrogramming of Neural Networks](https://arxiv.org/pdf/1806.11146.pdf) which caught my attention. It introduced a new kind of adversarial example for neural networks, those which could actually perform a useful task for the adversary as opposed to just fooling the attacked network. The attack 'reprograms' a network designed for a particular task to perform a completely different one. The paper showed that popular ImageNet architectures like Inception and ResNets can be successfully reprogrammed to perform quite well in different tasks like counting squares, MNIST and CIFAR-10.
+<figure style="margin: 20px auto; text-align: center;">
+    <img src='/images/adv_reprog/cover_5iscat.png' alt='catis5' width='auto' style='margin:20px auto; display:inline-block' text-align='center'/>
+</figure>
+
+
+Google brain recently published a paper titled [Adversarial Reprogramming of Neural Networks](https://arxiv.org/pdf/1806.11146.pdf) which caught my attention. It introduced a new kind of adversarial example for neural networks, those which could actually perform a useful task for the adversary as opposed to just fooling the attacked network. The attack 'reprograms' a network designed for a particular task to perform a completely different one. The paper showed that popular ImageNet architectures like Inception and ResNets can be successfully reprogrammed to perform quite well in different tasks like counting squares, MNIST and CIFAR-10.
 
 I'm going to walk through the paper in this post, and also add some of my own small modifications to the work they presented in the paper. In particular, I experimented with a slightly different method of action of the adversarial program, different regularization techniques and also targeted different networks - ResNet 18 and AlexNet.
 
 # Paper summary
 
-The paper demonstrated adversarial repgrogramming of some famous ImageNet architectures like Inceptions v2, v3 and v4, along with some ResNets - 50, 101, and 152. They reprogrammed these networks to perform MNIST and CIFAR-10 classification, and also the task of counting squares in an image. 
+The paper demonstrated adversarial reprogramming of some famous ImageNet architectures like Inceptions v2, v3 and v4, along with some ResNets - 50, 101, and 152. They reprogrammed these networks to perform MNIST and CIFAR-10 classification, and also the task of counting squares in an image. 
 
 The gist of the reprogramming process is as follows:
 
@@ -31,12 +36,12 @@ $$X_{adv} = \tanh(W \odot M)+ pad(X)$$
 where $\odot$ represents element wise multiplication, and $X$ is the input MNIST image. The illustrations in the paper shown below sum it up well:
 
 <figure style="margin: 20px auto; text-align: center;">
-    <img src='/images/adv_reprog/paper_illustration1.PNG' alt='missing' width='auto' style='margin:20px auto; display:inline-block' text-align='center'/>
+    <img src='/images/adv_reprog/paper_illustration1.PNG' alt='pap1' width='auto' style='margin:20px auto; display:inline-block' text-align='center'/>
     <figcaption>Add a masked adversarial program to an input image from the counting squares task.</figcaption>
 </figure>
 
 <figure style="margin: 20px 10%; text-align: center;">
-    <img src='/images/adv_reprog/paper_illustration2.PNG' alt='missing' width='auto' style='margin:20px auto; display:inline-block' text-align='center'/>
+    <img src='/images/adv_reprog/paper_illustration2.PNG' alt='pap2' width='auto' style='margin:20px auto; display:inline-block' text-align='center'/>
     <figcaption>Pass through ImageNet model and remap outputs.</figcaption>
 </figure>
 
@@ -52,10 +57,10 @@ The results of the paper were quite interesting. Here are some important observa
 
 ## Regularization using blurring
 
-One very important difference between these adversarial programs and traditional adversarial examples is that traditional examples were only deemed adversarial because the perturbation added to them was small in magnitude. However in this case, as the authors state, "the magnitude of this perturbation[adversarial program] need not be constrained", as the adversarial perturbation is not applied on any previously true example. This fact is leveraged when training the program, as there are no limits on how large $W$ can be. Another point to note is that the perturbation is a non-linear function of the trained weights $W$. This is in contrast to other adversarial examples like the [_Fast Gradient Sign Method_](https://arxiv.org/abs/1412.6572) which are linear perturbations.
+One very important difference between these adversarial programs and traditional adversarial examples is that traditional examples were only deemed adversarial because the perturbation added to them was small in magnitude. However in this case, as the authors state, "the magnitude of this perturbation[adversarial program] need not be constrained", as the adversarial perturbation is not applied on any previously true example. This fact is leveraged when training the program, as there are no limits on how large $W$ can be. Another point to note is that the perturbation is a nonlinear function of the trained weights $W$. This is in contrast to other adversarial examples like the [_Fast Gradient Sign Method_](https://arxiv.org/abs/1412.6572) which are linear perturbations.
 
 
-One point which I'd like to bring up is that previous adversarial perturbations were better off if they contained high frequency components which made them "look like noise" (although they are anything but noise), as this resulted in perturbations which are imperctible by the human eye. In other words, the perturbations did not change the true label of the image, but successfully fooled the targeted network. In the topic of adversarial programs however, there is no requirement for these perturbations to contain only high frequencies and be imperctible, as the goal of the program is to repurpose the targeted network rather than to simply fool it. This means that we can enforce some smoothness in the trained program as a regularization technique as opposed to using L2 regularization. 
+One point which I'd like to bring up is that previous adversarial perturbations were better off if they contained high frequency components which made them "look like noise" (although they are anything but noise), as this resulted in perturbations which are imperceptible by the human eye. In other words, the perturbations did not change the true label of the image, but successfully fooled the targeted network. In the topic of adversarial programs however, there is no requirement for these perturbations to contain only high frequencies and be imperceptible, as the goal of the program is to repurpose the targeted network rather than to simply fool it. This means that we can enforce some smoothness in the trained program as a regularization technique as opposed to using L2 regularization. 
 
 I trained an adversarial program for ResNet-18 to classify MNIST digits using regularization techniques borrowed from [this post](https://www.auduno.com/2015/07/29/visualizing-googlenet-classes/). The basic idea is as follows:
 
@@ -65,8 +70,8 @@ I trained an adversarial program for ResNet-18 to classify MNIST digits using re
 After training for around 20 epochs, this was the resulting adversarial program:
 
 <figure style="margin: 20px auto; text-align: center;">
-    <img src='/images/adv_reprog/RESNET18_MNIST_masked_blurredgrad_and_weight_1k.gif' alt='missing' width='auto' style='margin:20px 50px; display:inline-block' text-align='center'/>
-    <img src='/images/adv_reprog/RESNET18_MNIST_masked_blurredgrad_and_weight_1k.png' alt='missing' width='auto' style='margin:20px 50px; display:inline-block' text-align='center'/>
+    <img src='/images/adv_reprog/RESNET18_MNIST_masked_blurredgrad_and_weight_1k.gif' alt='res18gif' width='auto' style='margin:20px 50px; display:inline-block' text-align='center'/>
+    <img src='/images/adv_reprog/RESNET18_MNIST_masked_blurredgrad_and_weight_1k.png' alt='res18' width='auto' style='margin:20px 50px; display:inline-block' text-align='center'/>
     <figcaption>Animation and final result of training an adversarial program using masking for Resnet 18 on MNIST</figcaption>
 </figure>
 
@@ -79,31 +84,31 @@ However, I do believe that this method of transforming the input using a mask is
 The authors of the paper mention that the input transformation and output remapping "could be any consistent transformation that converts between the input (output) formats for the two tasks and causes the model to perform the adversarial task". In the case of the MNIST adversarial reprogramming, the input transformation was masking the weights and adding the MNIST input to the centre. The authors state that they used this masking "purely to improve visualization of the action of the adversarial program" as one can clearly see the MNIST digit in the adversarial image. The masking is not required for this process to work. This however seems a bit lacking in that the network is now forced to differentiate between the 10 MNIST classes using only the information in the center 28x28 pixels of the input, while the remaining part of the input, the adversarial program, remains constant for all the 10 classes. Another transformation which retains visualization ability is to simply scale the MNIST input (linearly interpolate) and add it to the adversarial program weights without any masking, before applying the non-linearity. In this case, the fraction of the adversarial input which distinguishes between classes is the same as that would be for any other MNIST classifier.  An example is shown below:
 
 <figure style="margin: 20px auto; text-align: center;">
-    <img src='/images/adv_reprog/scale_program_illu.png' alt='missing' width='auto' style='margin:20px auto; display:inline-block' text-align='center'/>
+    <img src='/images/adv_reprog/scale_program_illu.png' alt='scale' width='auto' style='margin:20px auto; display:inline-block' text-align='center'/>
     <figcaption>Illustration of the input transformation described above.</figcaption>
 </figure>
 
 Again, I trained an adversarial program using this new input transformation for Resnet 18. I used the same two regularization techniques of gradually decreased weight and gradient blurring as before, with the same parameters.
 
 <figure style="margin: 20px auto; text-align: center;">
-    <img src='/images/adv_reprog/RESNET18_MNIST_blurredgrad_and_weight_1k.gif' alt='missing' width='auto' style='margin:20px 50px; display:inline-block' text-align='center'/>
-    <img src='/images/adv_reprog/RESNET18_MNIST_blurredgrad_and_weight_1k.png' alt='missing' width='auto' style='margin:20px 50px; display:inline-block' text-align='center'/>
+    <img src='/images/adv_reprog/RESNET18_MNIST_blurredgrad_and_weight_1k.gif' alt='res18scalegif' width='auto' style='margin:20px 50px; display:inline-block' text-align='center'/>
+    <img src='/images/adv_reprog/RESNET18_MNIST_blurredgrad_and_weight_1k.png' alt='res18scale' width='auto' style='margin:20px 50px; display:inline-block' text-align='center'/>
     
     <figcaption>Animation and final result of training an adversarial program using scaling for Resnet 18 on MNIST.</figcaption>
 </figure>
 
 <figure style="margin: 20px auto; text-align: center;">
-    <img src='/images/adv_reprog/RESNET18_blurredgw_5.png' alt='missing' width='auto' style='margin:20px auto; display:inline-block' text-align='center'/>
+    <img src='/images/adv_reprog/RESNET18_blurredgw_5.png' alt='5iscat' width='auto' style='margin:20px auto; display:inline-block' text-align='center'/>
     <figcaption>An example of adversarial image obtained by adding a scaled version of the MNIST digit 5 to an adversarial program, and then applying a sigmoid activation. Resnet 18 classifies this image as an 'Egyptian Cat' with 0.99 confidence</figcaption>
 </figure>
 
 The model obtained a test accuracy of __97.87%__, around ~1% better than the masked transformation. It also obtained this accuracy after 15 epochs of training, showing faster convergence than the masked transformation. It also doesn't sacrifice much in terms of visualization ability.
 
-For comparisons, I also trained a program for a randomly initialzed ResNet 18 network, using the gradient and weight blurring regularizations, and the scaling input transformation. As expected, the model performed much worse, with a test accuracy of only __44.15%__ after 20 epochs. The program also showed a lack of low frequency textures and features despite the use of blurring regularization:
+For comparisons, I also trained a program for a randomly initialized ResNet 18 network, using the gradient and weight blurring regularizations, and the scaling input transformation. As expected, the model performed much worse, with a test accuracy of only __44.15%__ after 20 epochs. The program also showed a lack of low frequency textures and features despite the use of blurring regularization:
 
 <figure style="margin: 20px auto; text-align: center;">
-    <img src='/images/adv_reprog/RESNET18_randomweights_MNIST_blurredgrad_and_weight_1k.gif' alt='missing' width='auto' style='margin:20px 50px; display:inline-block' text-align='center'/>
-    <img src='/images/adv_reprog/RESNET18_randomweights_MNIST_blurredgrad_and_weight_1k.png' alt='missing' width='auto' style='margin:20px 50px; display:inline-block' text-align='center'/>
+    <img src='/images/adv_reprog/RESNET18_randomweights_MNIST_blurredgrad_and_weight_1k.gif' alt='res18randgif' width='auto' style='margin:20px 50px; display:inline-block' text-align='center'/>
+    <img src='/images/adv_reprog/RESNET18_randomweights_MNIST_blurredgrad_and_weight_1k.png' alt='res18rand' width='auto' style='margin:20px 50px; display:inline-block' text-align='center'/>
     
     <figcaption>Animation and final result of training an adversarial program for an untrained (randomly initialized) ResNet 18 network on MNIST even with blurring regularization</figcaption>
 </figure>
@@ -119,8 +124,8 @@ The above experiments have focused on changing the input transformation and regu
 To train the program with a multiple label mapping, I added the output probabilities of the multiple ImageNet labels corresponding to each CIFAR-10 label to get a set of 10 probabilities corresponding to each CIFAR label. I then used the negative log likelihood loss on these probabilities. Before going to the multi label mapping, I also trained an arbitrary 10 label mapping for ResNet 18 on CIFAR. It achieved a test accuracy of about __61.84%__ after 35 epochs. I then trained the same ResNet using the above greedy multi-label mapping with the same training parameters. It achieved a test accuracy of __67.63%__ after just 16 epochs. 
 
 <figure style="margin: 20px auto; text-align: center;">
-    <img src='/images/adv_reprog/Resnet18_CIFAR10tanh_blurredgrad_weight_zeroinit_1k_multilabelremap.gif' alt='missing' width='auto' style='margin:20px 50px; display:inline-block' text-align='center'/>
-    <img src='/images/adv_reprog/Resnet18_CIFAR10tanh_blurredgrad_weight_zeroinit_1k_multilabelremap.png' alt='missing' width='auto' style='margin:20px 50px; display:inline-block' text-align='center'/>
+    <img src='/images/adv_reprog/Resnet18_CIFAR10tanh_blurredgrad_weight_zeroinit_1k_multilabelremap.gif' alt='res18cifgif' width='auto' style='margin:20px 50px; display:inline-block' text-align='center'/>
+    <img src='/images/adv_reprog/Resnet18_CIFAR10tanh_blurredgrad_weight_zeroinit_1k_multilabelremap.png' alt='res18cif' width='auto' style='margin:20px 50px; display:inline-block' text-align='center'/>
     
     <figcaption>Animation and final result of training an adversarial program using greedily chosen multiple output label mappings for Resnet 18 on CIFAR-10.</figcaption>
 </figure>
@@ -128,7 +133,7 @@ To train the program with a multiple label mapping, I added the output probabili
 I repeated the above experiment on CIFAR-10 using AlexNet instead of Resnet 18. An arbitrary single output mapping yielded a test accuracy of __57.40%__ after 21 epochs, while using the greedy multi output mapping boosted that to __61.31%__ after 30 epochs.
 
 <figure style="margin: 20px auto; text-align: center;">
-    <img src='/images/adv_reprog/cifar10_programmed_trailertruck.png' alt='missing' width='auto' style='margin:20px auto; display:inline-block' text-align='center'/>
+    <img src='/images/adv_reprog/cifar10_programmed_trailertruck.png' alt='truck' width='auto' style='margin:20px auto; display:inline-block' text-align='center'/>
     <figcaption>Reprogrammed input of a CIFAR-10 truck which is classified by ResNet 18 as a 'trailer truck' with 0.42 confidence. Note that calling this input 'adversarial' is bit misleading, as this example can't really be considered one that 'fools' the target network.</figcaption>
 </figure>
 
