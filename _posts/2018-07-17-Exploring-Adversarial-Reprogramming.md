@@ -120,6 +120,7 @@ The above experiments have focused on changing the input transformation and regu
 * Run CIFAR train set through ResNet. 
 * Get a histogram of ImageNet labels for each CIFAR label. 
 * Map each ImageNet label to the CIFAR label with the highest value.
+* For example, let's look at the ImageNet label _goldfish_. After passing the CIFAR training set through the model, let's say 10 trucks were classified as goldfish, 200 birds, 80 airplanes, etc. (these numbers are just examples). Suppose the 200 birds is the largest number of a single CIFAR class which was classified as _goldfish_. I then choose to map the _goldfish_ output to the CIFAR label _bird_. This is the greedy part - I map the ImageNet label $y$ to that CIFAR label which was classified as $y$ the most often (in the training set). I repeat this process for all 1000 ImageNet labels.
 
 To train the program with a multiple label mapping, I added the output probabilities of the multiple ImageNet labels corresponding to each CIFAR-10 label to get a set of 10 probabilities corresponding to each CIFAR label. I then used the negative log likelihood loss on these probabilities. Before going to the multi label mapping, I also trained an arbitrary 10 label mapping for ResNet 18 on CIFAR. It achieved a test accuracy of about __61.84%__ after 35 epochs. I then trained the same ResNet using the above greedy multi-label mapping with the same training parameters. It achieved a test accuracy of __67.63%__ after just 16 epochs. 
 
