@@ -3,7 +3,8 @@ layout: post
 title: Exploring Adversarial Reprogramming
 watch: true
 excerpt: Google brain recently published a paper titled <a href="https://arxiv.org/pdf/1806.11146.pdf">Adversarial Reprogramming of Neural Networks</a> which caught my attention. I explore the ideas of the paper and perform some of my own experiments in this post.
-image: /images/adv_reprog/cover_5iscat.png
+image: 
+    path: /images/adv_reprog/cover_5iscat.png
 comments: true
 
 ---
