@@ -166,5 +166,36 @@ The above animations look pretty realistic, but the reconstructions are far from
 
 This fun little project goes to show that you can use deep learning to make cool stuff even if you don't have a dataset to play with - just make your own! 
 
+# Cubic Spline Interpolation
+_Addendum on Aug 4_
+
+Some of you suggested to try out higher order interpolation techniques as they might result in smoother animations. Indeed this is a great idea, so I went ahead and made some gifs using _cubic spline_ interpolation. Here are some of the gifs with the linearly interpolated ones as well for comparison:
+
+
+<figure style="margin: 20px auto; text-align: center; width:100%" vertical-align='middle'>
+    <img src='/images/anim_dood/danceman_brownian_std1.2.gif' alt='dance std 1.2' width='20%' style='margin:20px 3%; display:inline-block' text-align='center' vertical-align='middle'/>
+    <img src='/images/anim_dood/danceman_cubic_std0.5_20frames.gif' alt='dance cube 0.5' width='20%' style='margin:20px 3%; display:inline-block' text-align='center' vertical-align='middle'/>
+    
+    <figcaption>The gif created using cubic spline interpolation (right) seems smoother compared to the one on the left.</figcaption>
+</figure>
+
+<figure style="margin: 20px auto; text-align: center; width:100%" vertical-align='middle'>
+    <img src='/images/anim_dood/jumpingjack_brownian_std1.3.gif' alt='jj std 1.3' width='20%' style='margin:20px 3%; display:inline-block' text-align='center' vertical-align='middle'/>
+    <img src='/images/anim_dood/jumpingjack_cubic_std1.0_20frames.gif' alt='jj cube 1.0' width='20%' style='margin:20px 3%; display:inline-block' text-align='center' vertical-align='middle'/>
+</figure>
+
+<figure style="margin: 20px auto; text-align: center; width:100%" vertical-align='middle'>
+    <img src='/images/anim_dood/walker2_brownian_std1.0.gif' alt='walker std 1.0' width='20%' style='margin:20px 3%; display:inline-block' text-align='center' vertical-align='middle'/>
+    <img src='/images/anim_dood/walker2_cubic_std0.8_20frames.gif' alt='walker cube 0.8' width='20%' style='margin:20px 3%; display:inline-block' text-align='center' vertical-align='middle'/>
+    <figcaption>Although the differences in the above examples are much more subtle and hard to make out.</figcaption>
+</figure>
+
+<figure style="margin: 20px auto; text-align: center; width:100%" vertical-align='middle'>
+    <img src='/images/anim_dood/neuron_brownian_std0.8.gif' alt='neuron std 0.8' width='20%' style='margin:20px 3%; display:inline-block' text-align='center' vertical-align='middle'/>
+    <img src='/images/anim_dood/neuron_cubic_std0.8_100frames.gif' alt='dance cube 0.5' width='20%' style='margin:20px 3%; display:inline-block' text-align='center' vertical-align='middle'/>
+    
+    <figcaption>It's almost the same in the case of letters as well.</figcaption>
+</figure>
+
 ---
 You can find my code for this post [here](https://github.com/rajatvd/AutoencoderAnim). It's written using pytorch, with the aid of some [utils](https://github.com/rajatvd/PytorchUtils) I made. Special thanks to my brother Anjan for the discussions we had about the ideas in this post.
