@@ -1,16 +1,22 @@
 ---
-title: My projects
+title: 
 layout: page
 permalink: /projects/
 ---
 
-A list of some of the projects I have worked on previously:
+A list of some of the projects and other stuff I have worked on:
+
+
+## Talk at PySangamam
+I gave a talk on generators at [PySangamam 2018](https://pysangamam.org/), Tamil Nadu's __first__ Python conference. You can find the slides for my talk [here](https://rajatvd.github.io/PySangamam/).
+
+---
 
 ## A Physics Simulation of gravitating particles in 2D
 
 This is a simulation of 2D particles in a plane written in Java. The code can be found in the [repo](https://github.com/rajatvd/PhysicsSim). Click [here](https://rajatvd.github.io/PhysicsSim/PhysicsSim_v1.5.3.jar) to download the latest .jar executable. I also ported the Java app to a [web version](https://rajatvd.github.io/PhysicsSim/war/PhysicsSimWeb.html) with some small features omitted (like custom colors). Note that this port can be a bit buggy.
 
-Some of the currently available features include: 
+Some of the currently available features include:
 
 * Collision detection between spheres
 * Gravitation between the particles
