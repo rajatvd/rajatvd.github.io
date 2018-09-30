@@ -25,7 +25,9 @@ This model therefore uses the initial hidden state as a sort of input as opposed
 # Training
 To train the RNN, I used _teacher forcing_. This means that, during training, I don't use the actual outputs of the RNN to feed the next timestep, and instead I just use the actual word as the input to the RNN.
 
-I trained a simple GRU model on the GloVe word vectors, and a sufficiently large model (hidden size of ~1500) could overfit pretty easily. However, the loss on a small validation set would increase pretty quickly and not match the steady decrease of the training loss. This makes sense because it would be impractical to expect the network to learn the exact textual representation of a word vector it has never seen before. It would only base it upon previously seen words, so if the dataset contained words which had some meaning that could not be directly discerned from its character level representation, then the network would have no way of generating it. This means that looking at validation loss may not be a good metric for 'originality' of the generated words. However, I haven't been able to find any other metric to measure performance.
+I trained a simple GRU model on the GloVe word vectors, and a sufficiently large model (hidden size of ~1500) could overfit pretty easily. However, the loss on a small validation set would increase pretty quickly and not match the steady decrease of the training loss. This makes sense because it would be impractical to expect the network to learn the exact textual representation of a word vector it has never seen before. It would only base it upon previously seen words, so if the dataset contained words which had some meaning that could not be directly discerned from its character level representation, then the network would have no way of generating it. This means that looking at validation loss may not be a good metric for 'originality' of the generated words.
+
+To make the network generate more 'original' words, I tried to add regularization schemes like dropout and $L2$ weight decay, however they seemed to make the network generate more words from the vocabulary as opposed to new words. Another attempt was to add noise to the embeddings while training, but this also didn't lead to much improvement (validation loss still increased, but a bit slower than without regularization). It seemed like the models which overfit more actually ended up generating more 'novel' words. However, this is all a qualitative assessment, as I had no quantitative way of measuring the originality of generated words.
 
 # Sampling using Beam Search
 To sample words from the decoder, we need to feed in the output of a previous time step as the input to the next timestep. In particular, we need to find the word with the highest probability given the input embedding. The probability of a word being generated is obtained by multiplying the probabilities of generating each of its characters. This is made clear in the diagram below:
@@ -53,7 +55,7 @@ It is intractable to search through all possible words to find the one with the 
   - Only the top $k=3$ words are expanded at each time step.
   - Of the resulting words at the next time step, only the top $k$ words are kept.
 
-To make the network generate _original_ or new words, I added some noise to the embedding of the input word. In the example diagram, some noise is added to the embedding vector of the word _musical_, and then passed through the model. Performing beam search generated the word _melodynamic_, which seems to sound similar in meaning to the word _musical_, but is also an original word (it isn't present in the vocabulary for GloVe vectors).
+To make the network generate new words, I added some noise to the embedding of the input word. In the example diagram, some noise is added to the embedding vector of the word _musical_, and then passed through the model. Performing beam search generated the word _melodynamic_, which seems to sound similar in meaning to the word _musical_, but is also an original word (it isn't present in the vocabulary for GloVe vectors).
 
 Passing the same embedding with a beam size of 20 yields the following words:
 
@@ -89,11 +91,17 @@ Here are some cherry picked examples of generated words which look pretty cool, 
 | war  | demutualization, armision|
 | intelligence  | technicativeness,   intelimetry  |
 | intensity  | miltrality, amphasticity   |
-| harmony   | symphthism, symphthabic, ordenity|    
-| conceptual |  semantological, mathedrophobic|
+| harmony   | symphthism, ordenity, whistlery, hightonial|    
+| conceptual |  stemanological, mathedrophobic|
+| mathematics   | tempologistics, mathdom    |
+| research   | scienting  |
+| befuddled   | pizzled, badmanished, stummied, stumpingly   |
+| dogmatic   | doctivistic, ordionic, prescribitious, prefactional, pastological    |
 {: .table}
 
-These results indicate that the network has learned to link certain aspects of the embedding representation with the character level representation. However, we saw in the full beam of samples for the word _musical_ that the network also recreates words which are present in the vocabulary, so originality in the generated word is not guaranteed.
+These results indicate that the network has learned to link certain aspects of the embedding representation with the character level representation. However, we saw in the full beam of samples for the word _musical_ that the network also recreates words which are present in the vocabulary, so originality of the generated words is not guaranteed.
+
+You can find a huge list of generated words from which I cherry picked the above samples [here]({{site.baseurl}}/example_words/).
 
 ## Fixing initial characters
 An interesting modification to the sampling process is to fix the initial few characters, and let the network complete the rest of the word. This is again done just by passing the fixed initial characters through the decoder and then using beam search to fill in the rest of the word.
@@ -152,11 +160,11 @@ This further shows that the network has learned to map embedding representations
 ## What next?
 I have experimented with using [FastText](https://arxiv.org/abs/1607.04606) embeddings, and they seem to converge much faster than the GloVe vectors, as they were designed by keeping the character level structures of words in mind. However, I could not make out any qualitative differences in the generated words.
 
-An important thing to look into would be developing a good metric for measuring 'originality' of the generated words. This would allow the different embedding schemes to be compared quantitatively.
+Another important thing to look into would be developing a good metric for measuring the 'originality' of the generated words. This would allow the different embedding and regularization schemes to be compared quantitatively.
 
 # Try it out yourself
 I've uploaded the code for this project on github [here](https://github.com/rajatvd/WordGenerator.git). It has the weights of one particular GRU model trained on Glove word vectors. Go ahead and sample with different noise levels and initial characters and tweet me [@rajat_vd](https://www.twitter.com/rajat_vd) if you find some cool looking words!
 
 ---
 
-Thanks to my brother Anjan for discussing about the ideas in this post. I'd also like to thank the [Computer Vision and Intelligence Group](https://iitmcvg.github.io/) of IIT Madras for generously providing me with the compute resources for this project.
+I'd like to thank my brother Anjan for our discussions about the ideas in this post. I'd also like to thank the [Computer Vision and Intelligence Group](https://iitmcvg.github.io/) of IIT Madras for generously providing me with the compute resources for this project.
