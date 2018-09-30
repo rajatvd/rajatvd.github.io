@@ -108,8 +108,8 @@ An interesting modification to the sampling process is to fix the initial few ch
 
 For example, by passing in the word vector for _appropriate_, and fixing the first characters as _prop_, we get the following beam of outputs:
 
-> Input word: appropriate, start = prop
-proper
+> Input word: appropriate, start = prop  
+>proper
 properate
 proport
 propore
@@ -132,8 +132,8 @@ proprietive
 
 Similarly, for the input word _gas_, these are the outputs:
 
->Input word: gas, start = prop
-propel
+>Input word: gas, start = prop  
+>propel
 propellate
 propelly
 propellant
