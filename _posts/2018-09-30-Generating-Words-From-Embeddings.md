@@ -103,7 +103,7 @@ Here are some cherry picked examples of generated words which look pretty cool, 
 | conceptual |  stemanological, mathedrophobic|
 | mathematics   | tempologistics, mathdom    |
 | research   | scienting  |
-| befuddled   | pizzled, badmanished, stummied, stumpingly   |
+| befuddled   | badmanished, stummied, stumpingly   |
 | dogmatic   | doctivistic, ordionic, prescribitious, prefactional, pastological    |
 {: .table}
 
