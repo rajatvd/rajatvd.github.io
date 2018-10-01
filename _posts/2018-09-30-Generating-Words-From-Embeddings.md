@@ -18,7 +18,7 @@ comments: true
 
 In this post, I'm going to go over a recent project of mine in which I investigate how well a neural network could learn to generate words one character at a time, conditioned on an embedding vector representing its meaning.
 
-# The model
+# The Model
 I used a simple generative character level recurrent decoder model to generate the words character by character. This means that the output of the model is a probability over characters, and the input is the previously generated character. I condition the model on the meaning of the word by initializing the hidden state of the RNN based on the word embedding. In particular, I pass the word vector through a simple fully connected layer and use that to initialize the hidden state of the RNN.
 
 <figure style="margin: 20px auto; text-align: center; width:100%" vertical-align='middle'>
