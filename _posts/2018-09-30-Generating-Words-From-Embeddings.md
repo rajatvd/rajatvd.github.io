@@ -4,13 +4,22 @@ title: Generating Words from Embeddings
 watch: true
 excerpt:  I train a character level decoder RNN to generate words, conditioned on a word embedding which represents the <i>meaning</i> of the word.
 image:
-    path: /images/word_gen/beam_search.png
+    path: /images/word_gen/cover.png
     width: 90%
 comments: true
 
 ---
 
+<figure style="margin: 20px auto; text-align: center; width:100%" vertical-align='middle'>
+    <img src='/images/word_gen/cover.png' alt='cover' width='90%' style='margin:20px 3%; display:inline-block' text-align='center' vertical-align='middle'/>
+
+
+</figure>
+
 In this post, I'm going to go over a recent project of mine in which I investigate how well a neural network could learn to generate words one character at a time, conditioned on an embedding vector representing its meaning.
+
+# The model
+I used a simple generative character level recurrent decoder model to generate the words character by character. This means that the output of the model is a probability over characters, and the input is the previously generated character. I condition the model on the meaning of the word by initializing the hidden state of the RNN based on the word embedding. In particular, I pass the word vector through a simple fully connected layer and use that to initialize the hidden state of the RNN.
 
 <figure style="margin: 20px auto; text-align: center; width:100%" vertical-align='middle'>
     <img src='/images/word_gen/model.png' alt='model' width='80%' style='margin:20px 3%; display:inline-block' text-align='center' vertical-align='middle'/>
@@ -18,7 +27,6 @@ In this post, I'm going to go over a recent project of mine in which I investiga
     <figcaption>The model architecture of the character level decoder</figcaption>
 </figure>
 
-I used a simple generative character level recurrent decoder model to generate the words character by character. This means that the output of the model is a probability over characters, and the input is the previously generated character. I condition the model on the meaning of the word by initializing the hidden state of the RNN based on the word embedding. In particular, I pass the word vector through a simple fully connected layer and use that to initialize the hidden state of the RNN.
 
 This model therefore uses the initial hidden state as a sort of input as opposed to the actual inputs to the RNN.
 
