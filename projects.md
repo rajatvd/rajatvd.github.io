@@ -1,5 +1,5 @@
 ---
-title: 
+title:
 layout: page
 permalink: /projects/
 ---
@@ -8,7 +8,7 @@ A list of some of the projects and other stuff I have worked on:
 
 
 ## Talk at PySangamam
-I gave a talk on generators at [PySangamam 2018](https://pysangamam.org/), Tamil Nadu's __first__ Python conference. You can find the slides for my talk [here](https://rajatvd.github.io/PySangamam/).
+I gave a talk on generators at [PySangamam 2018](https://pysangamam.org/), Tamil Nadu's __first__ Python conference. You can find the slides for my talk [here](https://rajatvd.github.io/PySangamam/) and the video recording [here](https://www.youtube.com/watch?v=pNcnEr7nI4M).
 
 ---
 
