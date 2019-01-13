@@ -89,7 +89,7 @@ Equivalently by substituting from $\ref{T_eps}$,
 
 $$a(t) = a(t+\epsilon) \frac{\partial T_\epsilon(z(t), t)}{\partial z(t)} \label{chain_rule}$$
 
-Now, the derivative on the right hand side is the jacobian of the infinitesimal transform $T_\epsilon$. From $\ref{T_eps}$, we can first use the fact the $\epsilon$ is small and Taylor expand the integral around $z(t)$ to get:
+Now, the derivative on the right hand side is the jacobian of the infinitesimal transform $T_\epsilon$. From $\ref{T_eps}$, we can first use the fact that $\epsilon$ is small and Taylor expand around $z(t)$ to get:
 
 $$T_\epsilon(z(t), t) = z(t) + \int_{t}^{t+\epsilon} f(z(\tau), \tau; \theta) d\tau \approx  z(t) + \epsilon f(z(t), t; \theta)$$
 
