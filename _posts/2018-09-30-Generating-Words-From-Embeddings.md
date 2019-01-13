@@ -106,6 +106,7 @@ Here are some cherry picked examples of generated words which look pretty cool, 
 | befuddled   | badmanished, stummied, stumpingly   |
 | dogmatic   | doctivistic, ordionic, prescribitious, prefactional, pastological    |
 {: .table}
+{: style="color:black; font-size: 95%; text-align: center; margin-left:auto; margin-right:auto"}
 
 These results indicate that the network has learned to link certain aspects of the embedding representation with the character level representation. However, we saw in the full beam of samples for the word _musical_ that the network also recreates words which are present in the vocabulary, so originality of the generated words is not guaranteed.
 
