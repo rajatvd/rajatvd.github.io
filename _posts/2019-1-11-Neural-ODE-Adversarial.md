@@ -188,7 +188,7 @@ I performed the same visualization for two different input digits, over a much l
 </figure>
 
 
-It's clear that adversarial training has probably made the ODE create different steady states for different input classes. This, however, is just an intuitive explanation of what might be going on under the hood, and a more rigorous analysis is definitely needed. Looking at neural networks from a dynamical system point of view could provide really insightful explanations of their behavior and I definitely believe that this is a direction worth pursuing with more rigor and careful analysis. I'd love to hear your thoughts on this subject, so go ahead and tweet me [@rajat_vd](https://twitter.com/rajat_vd) or comment on the accompanying reddit post.
+It's clear that adversarial training has probably made the ODE create different steady states for different input classes. This, however, is just an intuitive explanation of what might be going on under the hood, and a more rigorous analysis is definitely needed. Looking at neural networks from a dynamical system point of view could provide really insightful explanations of their behavior and I definitely believe that this is a direction worth pursuing with more rigor and careful analysis. I'd love to hear your thoughts on this subject, so go ahead and tweet me [@rajat_vd](https://twitter.com/rajat_vd).
 
 You can find the code I used for this project in this [github repo](https://github.com/rajatvd/NeuralODE). I also used a neat package which the authors of the neural ODE paper released  for differentiable ODE solvers using the adjoint method called [torchdiffeq](https://github.com/rtqichen/torchdiffeq).
 
