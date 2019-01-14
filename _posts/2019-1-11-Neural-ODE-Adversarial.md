@@ -20,18 +20,18 @@ The central concept clicked in my mind while reading the insightful explanation 
 
 Residual networks differ from standard deep networks in that they attempt to learn the _change_ in hidden activations instead of learning a direct transformation. Functionally, we can represent this as follows, with $x$ as an input and $f_i$ as neural network layers:
 
-$$z_1 = f_0(x) + x$$
-$$z_2 = f_1(z_1) + z_1$$
-$$z_3 = f_2(z_2) + z_2$$
-$$z_4 = f_3(z_3) + z_3$$
+$z_1 = f_0(x) + x$  
+$z_2 = f_1(z_1) + z_1$  
+$z_3 = f_2(z_2) + z_2$  
+$z_4 = f_3(z_3) + z_3$  
 
 Where the $z_i$ are hidden activations. If we look carefully, this looks awfully similar to how the [Euler Method](https://en.wikipedia.org/wiki/Euler_method) would solve an ordinary differential equation. The "time" variable in the ODE is equivalent to layer number or "depth" in this context. Rewriting the above equations in a slightly different way might make this more apparent:
 
-$$z(t=0) = x$$
-$$z(1) - z(0) = f(z(0), t=0)$$
-$$z(2) - z(1) = f(z(1), t=1)$$
-$$z(3) - z(2) = f(z(2), t=2)$$
-$$z(4) - z(3) = f(z(3), t=3)$$
+$z(t=0) = x$  
+$z(1) - z(0) = f(z(0), t=0)$  
+$z(2) - z(1) = f(z(1), t=1)$  
+$z(3) - z(2) = f(z(2), t=2)$  
+$z(4) - z(3) = f(z(3), t=3)$  
 
 It's clear now that the _change_ in hidden activations (or state) $z$ over layer depth (or time) is given by the dynamics defined by the function $f$. It's a function (which is a neural network) of both the activations and the depth (analogous to general ODE dynamics depending on both state and time). We can now go to the continuous domain and write an ODE:
 
