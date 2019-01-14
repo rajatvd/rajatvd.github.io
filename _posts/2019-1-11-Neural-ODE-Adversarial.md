@@ -137,14 +137,14 @@ While the above applications are very interesting, I experimented with a much si
 In my experiments, I tried out different schemes for choosing the end time. One of them was to just increase it to something like $t=10$ and $t=100$. Note that this doesn't increase the parameters of the network as those are present only in the dynamics given by the function $f$. Another interesting method was to choose a random end time between $t=10$ and $t=100$ each time the ODE-net is called. I thought that this stochasticity might enforce some form of robustness by forcing the ODE to settle to an equilibrium. This network indeed showed a slight increase in accuracy on adversarial inputs, but only for a smaller sized ODE-network with roughly $17k$ parameters. I also performed these tests using a larger network with around $655k$ parameters. Both the networks had the same architecture, but the larger one had more channels in the ODE state. I've summarized the results into a table below. The accuracies shown are on standard/adversarial test datasets, with different end times while testing. I used a basic [Fast Gradient Sign Method (FGSM)](https://arxiv.org/abs/1412.6572) attack on the cross-entropy loss for creating the adversarial test examples.
 
 
-| Network       | Training end time | t=1            | t=10              | t=100             | t=500             |
-| ------------- | ----------------- | -------------- | ----------------- | ----------------- | ----------------- |
-| ODE-net small | 10                | 49.45 / 0      | 98.64 / 9.34      | 26.35 / 12.83     | 9.94 / 8.099      |
-| ODE-net small | 10-100            | 61.54 / 0      | 98.46 / 0.52      | 98.31 / **23.64** | **94.35** / 11.67 |
-| ODE-net small | 100               | 37.58 / 0      | 66.43 / 0         | 98.52 / 13.25     | 72.16 / 14.16     |
-| ODE-net large | 10                | 97.06 / 0.1823 | 98.93 / 30.76     | 91.43 / 28.20     | 9.35 / 8.57       |
-| ODE-net large | 10-100            | 72.84 / 0.15   | 99.08 / 70.67     | 99.11 / 85.98     | 94.66 / 62.29     |
-| ODE-net large | 100               | 78.88 / 0.59   | 98.85 / **83.13** | 99.01 / **92.62** | **96.68** / 78.60     |
+| Network       | Training end time | t=1          | t=10              | t=100             | t=500             |
+| ------------- | ----------------- | ------------ | ----------------- | ----------------- | ----------------- |
+| ODE-net small | 10                | 49.45 / 0    | 98.64 / 9.34      | 26.35 / 12.83     | 9.94 / 8.099      |
+| ODE-net small | 10-100            | 61.54 / 0    | 98.46 / 0.52      | 98.31 / **23.64** | **94.35** / 11.67 |
+| ODE-net small | 100               | 37.58 / 0    | 66.43 / 0         | 98.52 / 13.25     | 72.16 / 14.16     |
+| ODE-net large | 10                | 97.06 / 0.18 | 98.93 / 30.76     | 91.43 / 28.20     | 9.35 / 8.57       |
+| ODE-net large | 10-100            | 72.84 / 0.15 | 99.08 / 70.67     | 99.11 / 85.98     | 94.66 / 62.29     |
+| ODE-net large | 100               | 78.88 / 0.59 | 98.85 / **83.13** | 99.01 / **92.62** | **96.68** / 78.60 |
 {: style="color:black; font-size: 95%; text-align: center; margin-left:auto; margin-right:auto"}
 
 
