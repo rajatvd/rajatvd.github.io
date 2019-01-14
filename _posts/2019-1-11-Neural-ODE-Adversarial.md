@@ -43,7 +43,9 @@ Where $\theta$ denotes the parameters of the neural network. When this ODE is so
 
 <figure style="margin: 20px auto; text-align: center; width:100%" vertical-align='middle'>
     <img src='/images/neural_ode/cover.png' alt='cover' width='90%' style='margin:20px 3%; display:inline-block' text-align='center' vertical-align='middle'/>
-    <figcaption>Analogy between ResNets and ODE-nets. Top: A typical ResNet, depicted slightly differently from the conventional "skip-connection" view. The hidden layer activation $z$ can be thought of as a state propagating through layer depth, with the neural networks determining how it changes at each layer. Bottom: A visual depiction of how an ODE-net works. The state $z(t)$ propagates through time, with dynamics parameterized by a neural network. An ODE solver uses the neural network to evaluate the time derivative of the state at different time points and uses this to find the solution of the ODE. Note that both these networks preserve the size of the input vector.</figcaption>
+    <figcaption>Analogy between ResNets and ODE-nets.<br>
+
+    Top: A typical ResNet, depicted slightly differently from the conventional "skip-connection" view. The hidden layer activation $z$ can be thought of as a state propagating through layer depth, with the neural networks determining how it changes at each layer. Bottom: A visual depiction of how an ODE-net works. The state $z(t)$ propagates through time, with dynamics parameterized by a neural network. An ODE solver uses the neural network to evaluate the time derivative of the state at different time points and uses this to find the solution of the ODE. Note that both these networks preserve the size of the input vector.</figcaption>
 </figure>
 
 Advanced ODE solvers differ from the simple Euler method in multiple aspects:
@@ -166,7 +168,7 @@ We can visualize the state of the ODE-net evolving through time to get a better 
     <img src='/images/neural_ode/time_adv6_64x10x10_0-10-300.gif' alt='adv_trained' width='30%' style='margin:20px 50px; display:inline-block' text-align='center'/>
     <img src='/images/neural_ode/time_nonadv_run48_64x10x10_0-10-300.gif' alt='non_adv' width='30%' style='margin:20px 50px; display:inline-block' text-align='center'/>
 
-    <figcaption>Evolution of a part of the state of the neural ODE trained for an end time of $t=1$ with an input digit '6'. Left: Adversarially trained network which remains relatively constant after $t=1$ leading to higher accuracies for larger end times. The slow changes in the state are hard to notice with just our eye. Right: Normally trained network (same hyperparameters) with much more noticeable changes change after $t=1$. The state seems to eventually saturate.</figcaption>
+    <figcaption>Evolution of a part of the state of the neural ODE trained for an end time of $t=1$ with an input digit '6'. <br>Left: Adversarially trained network which remains relatively constant after $t=1$ leading to higher accuracies for larger end times. The slow changes in the state are hard to notice with just our eye. Right: Normally trained network (same hyperparameters) with much more noticeable changes change after $t=1$. The state seems to eventually saturate.</figcaption>
 </figure>
 
 It seems like the adversarially trained ODE state settles down faster than the normally trained one. At least I couldn't perceive significant changes in it when compared to the normal state. On closer inspection, I discovered that the state does in fact change by growing in scale, so the normalized image appears constant. This actually means that the derivative of the ODE state, the neural network $f$, is a constant. So it is technically not in 'equilibrium', but in a steady-state of sorts because the derivative state is itself in equilibrium.
