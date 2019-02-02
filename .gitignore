@@ -10,3 +10,4 @@ node_modules
 package.json
 __pycache__
 .ipynb_checkpoints
+scratch
