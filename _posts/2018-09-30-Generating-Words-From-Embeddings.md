@@ -172,7 +172,9 @@ I have experimented with using [FastText](https://arxiv.org/abs/1607.04606) embe
 Another important thing to look into would be developing a good metric for measuring the 'originality' of the generated words. This would allow the different embedding and regularization schemes to be compared quantitatively.
 
 # Try it out yourself
-I've uploaded the code for this project on github [here](https://github.com/rajatvd/WordGenerator.git). It has the weights of one particular GRU model trained on Glove word vectors. Go ahead and sample with different noise levels and initial characters and tweet me [@rajat_vd](https://www.twitter.com/rajat_vd) if you find some cool looking words!
+The easiest way to mess around with this model is through this simple [colab notebook](https://colab.research.google.com/drive/1f_vW0k8YyoyiPIgX7eHP_a-8T3Zepat3). It also includes sampling using an average of multiple word vectors as the input, so you can combine different semantics into one vector and see how the model generates words using that embedding.
+
+I've also uploaded the code for this project on github [here](https://github.com/rajatvd/WordGenerator.git). It has the weights of one particular GRU model trained on Glove word vectors. Go ahead and sample with different noise levels and initial characters and tweet me [@rajat_vd](https://www.twitter.com/rajat_vd) if you find some cool looking words!
 
 ---
 
