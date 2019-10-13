@@ -6,6 +6,12 @@ permalink: /projects/
 
 A list of some of the projects and other stuff I have worked on:
 
+---
+
+## Talk at PyCon India
+I gave a talk on generators at [PyCon India 2019](https://in.pycon.org/2019/). You can find the slides for my talk [here](https://rajatvd.github.io/PyCon/).
+
+---
 
 ## Course Project for Applied Linear Algebra
 I was part of a team of 2 students for the course project of [Applied Linear Algebra (Fall 2018)](http://www.ee.iitm.ac.in/uday/2018b-EE5120/index.html). The project required us to make a short YouTube video explaining concepts in Linear Algebra as used in modern research. We tackled the problem of low-rank matrix completion using nuclear norm minimization. It involved ideas like the singular value decomposition and its relation with the rank of a matrix, combined with insights from the field of compressed sensing. [Video link](https://www.youtube.com/watch?v=Ceq5dCc8RjY).
