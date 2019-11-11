@@ -20,7 +20,7 @@ I was part of a team of 2 students for the course project of [Applied Linear Alg
 ---
 
 ## Talk at PySangamam
-I gave a talk on generators at [PySangamam 2018](https://pysangamam.org/), Tamil Nadu's __first__ Python conference. You can find the slides for my talk [here](https://rajatvd.github.io/PySangamam/) and the video recording [here](https://www.youtube.com/watch?v=pNcnEr7nI4M).
+I gave a talk on generators at [PySangamam 2018](https://pysangamam.org/), Tamil Nadu's __first__ Python conference. You can find the slides for my talk [here](https://rajatvd.github.io/PyCon/) and the video recording [here](https://www.youtube.com/watch?v=pNcnEr7nI4M).
 
 ---
 
