@@ -8,6 +8,17 @@ A list of some of the projects and other stuff I have worked on:
 
 ---
 
+## Paper Presentations
+
+I gave two presentations as part of a course on **Advances in the Theory of Deep Learning (Fall 2019)** at IIT Madras. Here are the slides:
+
+* Slides: [Lazy Training in Differentiable Programming](https://drive.google.com/file/d/1YUW5AvH188xQkfEgrBLsKm69JKnahP_r/view?usp=sharing)
+   - Paper: Chizat, Lenaic, and Francis Bach. "A note on lazy training in supervised differentiable programming." [arXiv:1812.07956](https://arxiv.org/abs/1812.07956) (2018).
+* Slides: [Adversarial Examples are not Bugs, They are Features](https://drive.google.com/file/d/1h8Hn6XX9mBvIVbBEPCy6qtyczMYYuvQ8/view?usp=sharing)
+  - Paper: Ilyas, Andrew, et al. "Adversarial examples are not bugs, they are features." [arXiv:1905.02175](https://arxiv.org/abs/1905.02175) (2019).
+
+---
+
 ## Talk at PyCon India
 I gave a talk on generators at [PyCon India 2019](https://in.pycon.org/2019/). You can find the slides for my talk [here](https://rajatvd.github.io/PyCon/).
 
