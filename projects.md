@@ -20,7 +20,7 @@ I gave two presentations as part of a course on **Advances in the Theory of Deep
 ---
 
 ## Talk at PyCon India
-I gave a talk on generators at [PyCon India 2019](https://in.pycon.org/2019/). You can find the slides for my talk [here](https://rajatvd.github.io/PyCon/).
+I gave a talk on generators at [PyCon India 2019](https://in.pycon.org/2019/). You can find the slides for my talk [here](https://rajatvd.github.io/PyCon/), and [video recording here](https://www.youtube.com/watch?v=X9rqrF9Kpaw).
 
 ---
 
