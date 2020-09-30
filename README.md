@@ -1,3 +1,3 @@
 # My site
 
-[here it is](https://rajatvd.github.io)
+[Click here to visit website.](https://rajatvd.github.io)
