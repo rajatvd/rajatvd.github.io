@@ -24,8 +24,9 @@ body {
 // background: linear-gradient(to right, #e0f2f1 0%, #b2dfdb 100%);
 	// background: linear-gradient(to right, #e0f2f1, #ffffff 20%, #ffffff 80%, #e0f2f1);
     background:
-		linear-gradient(to right, $bgGradColor, transparent 7.5%, transparent 92.5%, $bgGradColor),
-		linear-gradient(to bottom, $bgGradColor, transparent 45px);
+		linear-gradient(to right, $bgGradColor, transparent calc(50% - 600px),
+		transparent calc(50% + 600px), $bgGradColor);
+		// linear-gradient(to bottom, $bgGradColor, transparent 45px);
 		// linear-gradient(to top, $bgGradColor, $white 300px);
 		// radial-gradient($white 60%, $bgGradColor 100%);
     background-repeat: no-repeat;
@@ -190,6 +191,7 @@ table {
 
 .wrapper-masthead {
   margin-bottom: 50px;
+  background-image: linear-gradient(to bottom, $bgGradColor, transparent 100%);
 }
 
 .masthead {
@@ -323,7 +325,7 @@ nav {
   border-bottom: 1px solid #ddd;
   background-image: 
 	// $bgGradColor;
-	linear-gradient(to top, $bgGradColor, transparent 70%);
+	linear-gradient(to top, $bgGradColor, transparent 100%);
 }
 
 .non-footer-wrapper {
