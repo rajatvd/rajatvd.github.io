@@ -15,12 +15,24 @@
 
 html {
   font-size: 100%;
+  min-height: 100vh;
 }
 
 body {
-	background: $white;
-  font: 18px/1.4 $helvetica;
-  color: $darkGray;
+   min-height: 100vh;
+	// background: $white;
+// background: linear-gradient(to right, #e0f2f1 0%, #b2dfdb 100%);
+	// background: linear-gradient(to right, #e0f2f1, #ffffff 20%, #ffffff 80%, #e0f2f1);
+    background:
+		linear-gradient(to right, $green, transparent 7.5%, transparent 92.5%, $green),
+		linear-gradient(to bottom, $green, transparent 80px);
+		// linear-gradient(to top, $green, $white 300px);
+		// radial-gradient($white 60%, $green 100%);
+    background-repeat: no-repeat;
+    background-size: 100% 100%, 100% 100%;
+    background-position: top, left;
+	font: 18px/1.4 $helvetica;
+	color: $darkGray;
 }
 
 .container {
@@ -299,15 +311,29 @@ nav {
 }
 
 .wrapper-footer {
-  margin-top: 50px;
+  // margin-top: 50px;
+
+  // box-sizing: border-box;
+  // position: relative;
+  // padding-bottom: 1em; /* Height of footer */
+  //   min-height: 100%;
+
+
   border-top: 1px solid #ddd;
   border-bottom: 1px solid #ddd;
-  background-color: $lightGray;
+  background-image: 
+	// $green;
+	linear-gradient(to top, $green, transparent 70%);
+}
+
+.non-footer-wrapper {
+  min-height: calc(100vh - 80px);
 }
 
 footer {
   padding: 20px 0;
   text-align: center;
+  height: 80px;
 }
 
 details {
