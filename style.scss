@@ -24,10 +24,10 @@ body {
 // background: linear-gradient(to right, #e0f2f1 0%, #b2dfdb 100%);
 	// background: linear-gradient(to right, #e0f2f1, #ffffff 20%, #ffffff 80%, #e0f2f1);
     background:
-		linear-gradient(to right, $green, transparent 7.5%, transparent 92.5%, $green),
-		linear-gradient(to bottom, $green, transparent 45px);
-		// linear-gradient(to top, $green, $white 300px);
-		// radial-gradient($white 60%, $green 100%);
+		linear-gradient(to right, $bgGradColor, transparent 7.5%, transparent 92.5%, $bgGradColor),
+		linear-gradient(to bottom, $bgGradColor, transparent 45px);
+		// linear-gradient(to top, $bgGradColor, $white 300px);
+		// radial-gradient($white 60%, $bgGradColor 100%);
     background-repeat: no-repeat;
     background-size: 100% 100%, 100% 100%;
     background-position: top, left;
@@ -322,8 +322,8 @@ nav {
   border-top: 1px solid #ddd;
   border-bottom: 1px solid #ddd;
   background-image: 
-	// $green;
-	linear-gradient(to top, $green, transparent 70%);
+	// $bgGradColor;
+	linear-gradient(to top, $bgGradColor, transparent 70%);
 }
 
 .non-footer-wrapper {
