@@ -61,6 +61,7 @@ h1 {
   font-size: 30px;
   a {
     color: inherit;
+	font-weight: bold;
   }
 }
 
@@ -268,7 +269,7 @@ nav {
     margin-left: 20px;
     color: $darkGray;
     text-align: right;
-    font-weight: 30;
+    font-weight: bold;
     letter-spacing: 1px;
 
     @include mobile {
