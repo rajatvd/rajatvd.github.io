@@ -20,11 +20,13 @@ A simple solution is **rounding** -- just round off the real number at some spec
 TODO: choose right values for example to look nice
 For example, if we round off after the 2nd decimal place, then 0.4239... becomes 0.42.
 
-<Insert visualization of round off with fixed decimal point and caption>
+<video width="100%" controls="controls" loop="loop" autoplay>
+  <source src="{{site.baseurl}}/images/floating_point/mp4s/RoundOff.mp4" type="video/mp4">
+</video>
 
 Clearly, this isn't a perfect way to store real numbers since we lose information. Different real numbers get mapped to the same rounded number in the computer.
 
-The error introduced by this rounding off is called **round-off error**.
+The error introduced by this rounding is called **round-off error**.
 
 err(x) = |x - round(x)|
 
@@ -32,7 +34,7 @@ An interesting property of this method is that the error is constant -- it doesn
 
 In fact, this error depends only on which decimal place we round off at. For example, if we round off at the 2nd decimal place, then the error is always at most 0.005.
 
-In general, the err(x) < 0.5 \* 10^(-d), where d is the decimal place we round off at.
+In general, err(x) < 0.5 \* 10^(-d), where d is the decimal place we round off at.
 
 <Insert visualization of constant round-off error, but varying relative error and caption>
 
