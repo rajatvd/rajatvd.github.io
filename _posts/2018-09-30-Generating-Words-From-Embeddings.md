@@ -4,7 +4,7 @@ title: Generating Words from Embeddings
 watch: true
 excerpt:  I train a character level decoder RNN to generate words, conditioned on a word embedding which represents the <i>meaning</i> of the word.
 image:
-    path: /images/word_gen/cover.png
+    path: images/word_gen/cover.png
     width: 90%
 comments: true
 
