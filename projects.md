@@ -57,11 +57,11 @@ Instructions:
 
 * An ideal gas can be simulated by turning on the walls. Since the Kinetic theory of Gases models them as a collection of particles which only interact with each other through elastic collisions, Newton's Laws are sufficient to simulate ideal gases.
 
-![ideal gas](/images/projects/idealGasPic.PNG)
+![ideal gas]({{site.baseurl}}/images/projects/idealGasPic.PNG)
 
 * By turning off the walls, a simulation of many large bodies can be created. It is possible to make systems having planets with their own moons by careful placement of particles.
 
-![three body](/images/projects/threeBody2.PNG)
+![three body]({{site.baseurl}}/images/projects/threeBody2.PNG)
 
 By playing around with the parameters like gravity strength, restitution and using particles of different sizes and masses, you can create a lot of different interesting systems! For example, try to create a system which mimics the behaviour of particles in a crystal.
 
