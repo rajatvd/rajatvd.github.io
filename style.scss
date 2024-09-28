@@ -7,6 +7,8 @@
 
 @import "reset";
 @import "variables";
+
+
 // Syntax highlighting @import is at the bottom of this file
 
 /**************/
@@ -32,7 +34,9 @@ body {
     background-repeat: no-repeat;
     background-size: 100% 100%, 100% 100%;
     background-position: top, left;
-	font: 18px/1.4 $helvetica;
+	// font: 18px/1.4 $georgia;
+	font-family: $fontFamily;
+	font: 20px/1.4 $fontFamily;
 	color: $darkGray;
 }
 
@@ -44,9 +48,10 @@ body {
 }
 
 h1, h2, h3, h4, h5, h6 {
-  font-family: $helveticaNeue;
+  // font-family: $helveticaNeue;
+  font-family: $fontFamily;
   color: $darkerGray;
-  font-weight: bold;
+  font-weight: 500;
 
   line-height: 1.7;
   margin: 1em 0 15px;
@@ -61,7 +66,7 @@ h1 {
   font-size: 30px;
   a {
     color: inherit;
-	font-weight: bold;
+    font-weight: 500;
   }
 }
 
@@ -235,7 +240,8 @@ table {
   margin: 0;
   color: $darkGray;
   cursor: pointer;
-  font-family: $helveticaNeue;
+  // font-family: $helveticaNeue;
+  font-family: $fontFamily;
   font-weight: 30;
   // font-weight: bold;
   font-size: 32px;
@@ -255,7 +261,7 @@ table {
 nav {
   float: right;
   margin-top: 23px; // @TODO: Vertically middle align
-  font-family: $helveticaNeue;
+  font-family: $fontFamily;
   font-size: 20px;
 
   @include mobile {
@@ -269,12 +275,12 @@ nav {
     margin-left: 20px;
     color: $darkGray;
     text-align: right;
-    font-weight: bold;
+    // font-weight: bold;
     letter-spacing: 1px;
 
     @include mobile {
       margin: 0 10px;
-      color: $blue;
+      color: $darkGray;
     }
   }
 }
