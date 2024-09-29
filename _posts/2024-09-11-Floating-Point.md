@@ -4,7 +4,7 @@ title: Floating Point Numbers
 watch: true
 excerpt: Understanding floating point numbers
 image:
-    path: images/neural_ode/cover.png
+    path: images/floating_point/gifs/RoundOff.gif
     width: 90%
 comments: true
 ---
