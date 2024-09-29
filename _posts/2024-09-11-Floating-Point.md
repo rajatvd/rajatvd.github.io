@@ -43,9 +43,44 @@ $$\text{error}(x) \leq 0.5 \cdot 10^{-d}$$
 
 where $d$ is the decimal place we round off at.
 
------Absolute vs relative error, and how log takes us from one to the other-----
+## Absolute vs Relative Error
 
------Get constant error by using fixed point to store log of number-----
+The error we just discussed is called the **absolute error**. It is the absolute difference between the real number and the approximation.
+
+Another way to quantify the error is by the **relative error**. It is just the absolute error normalized by the magnitude of the number:
+
+$$\text{relative error}(x) = \frac{\text{error}(x)}{\vert x \vert}.$$
+
+Many applications are more interested in the relative error than the absolute error, because the relative error is **scale-invariant**. 
+For example, if we are measuring the length of a rod, we are more interested in the error as a percentage of the length of the rod, instead of the error in some absolute units.
+
+
+-----Animation of relative error being scale-invariant-----
+
+
+### The log approximation
+
+An elegant method of approximately converting absolute error to relative error is through the **logarithm**.
+
+First, let's assume that our errors are very small, and go so far as to use the notation of infinitesimals from caclulus. 
+Specifically, we can say that 
+
+$$\text{error}(x) = dx$$
+
+where $dx$ is an infinitesimal error in $x$.
+
+The relative error is then
+
+$$\text{relative error}(x) = \frac{dx}{x}.$$
+
+The neat trick that allows us to relate the two errors elegantly is to observe that the relative error is actually the absolute error of the logarithm of the number:
+
+$$\text{error}(\log x) = d(\log x) = \frac{dx}{x} = \text{relative error}(x)$$
+
+where we used the fact that the derivative of $\log x$ is $1/x$.
+
+So now, if we want a storage scheme that has a fixed relative error, we can simply **store the logarithm of the number using fixed point.**
+This is exactly what floating point numbers do!
 
 -----Animation of log making floating point numbers uniformly spaced-----
 
