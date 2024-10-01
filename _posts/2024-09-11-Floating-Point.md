@@ -85,8 +85,18 @@ $$\text{relative error}(x) = \frac{dx}{x}.$$
 
 The neat trick that allows us to relate the two errors elegantly is to observe that the relative error is actually the absolute error of the logarithm of the number:
 
-$$ \color{darkgreen}\text{error}(\log x) = d(\log x) = \frac{dx}{x} = \text{relative error}(x)$$
-{: style="border: 2px solid darkgreen; padding: 0px; margin: 0px;"}
+$$
+\large{
+\color{#338833}
+\begin{align*}
+\text{error}(\log x) &= d(\log x) \\
+&= \frac{dx}{x} \\
+&= \text{relative error}(x)
+\end{align*}
+}
+$$
+
+<!-- {: style="background-color: #eeffee; padding: 10px; margin: 10px; border-radius: 5px;"} -->
 
 where we used the fact that the derivative of $\log x$ is $1/x$.
 
