@@ -4,7 +4,7 @@ title: Floating Point Numbers
 watch: true
 excerpt: Understanding floating point numbers
 image:
-    path: images/floating_point/gifs/RoundOff.gif
+    path: images/floating_point/gifs/LogFixedPoint.gif
     width: 90%
 comments: true
 ---
@@ -24,9 +24,9 @@ How do we store real numbers in a computer?
 
 <!-- ### Prelude -- Fixed Point Numbers -->
 
-Some approximation is clearly necessary since real numbers are continuous and infinite, while computers have finite memory.
+Some approximation is necessary since real numbers are continuous and infinite, while computers have finite memory.
 
-A simple solution is **rounding** -- just round off the real number at some specific decimal place and store the remaining digits.
+A simple solution is **rounding** -- just round off the real number after some decimal places and store the remaining digits.
 
 <video width="100%" controls="controls" loop="loop" autoplay>
   <source src="{{site.baseurl}}/images/floating_point/mp4s/RoundOff.mp4" type="video/mp4">
@@ -93,8 +93,9 @@ where we used the fact that the derivative of $\log x$ is $1/x$.
 So now, if we want a storage scheme that has a fixed relative error, we can simply **store the logarithm of the number using fixed point.**
 This is essentially what floating point does!
 
-
------Animation of log making floating point numbers uniformly spaced-----
+<video width="100%" controls="controls" loop="loop" autoplay>
+  <source src="{{site.baseurl}}/images/floating_point/mp4s/LogFixedPoint.mp4" type="video/mp4">
+</video>
 
 Before moving forward, let's switch to binary numbers, since that's what computers  actually use in practice.
 The same ideas of the logarithm and fixed point apply to binary numbers as well, since we simply have a different base for the log.
