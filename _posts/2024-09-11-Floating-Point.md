@@ -1,8 +1,8 @@
 ---
 layout: post
-title: Floating Point Numbers
+title: Perspectives on Floating Point
 watch: true
-excerpt: Understanding floating point numbers
+excerpt: An illuminating perspective on floating point numbers that I haven't seen emphasized before.
 image:
     path: images/floating_point/gifs/LogFixedPoint.gif
     width: 90%
@@ -40,7 +40,7 @@ $${\text{error}(x) = \vert x - \text{round}(x)\vert}.$$
 
 This error is called **round-off error**.
 
-An interesting property of this method is that the error is independent of the **magnitude** of the number being stored.
+An interesting property of this method is that the round-off error is independent of the **magnitude** of the number being stored.
 In the above example, we know that the error is at most $0.05$ for any number $x$.
 
 This is because the decimal point is **fixed**.
@@ -62,11 +62,15 @@ Another way to quantify the error is by the **relative error**. It is just the a
 $$\text{relative error}(x) = \frac{\text{error}(x)}{\vert x \vert}.$$
 
 Many applications are more interested in the relative error than the absolute error, because the relative error is **scale-invariant**. 
-For example, if we are measuring the length of a rod, we are more interested in the error as a percentage of the length of the rod, instead of the error in some absolute units.
+
+For example, if we are measuring lengths, having a constant absolute error of **1cm** might be acceptable for measuing the height of a person, but would be completely overkill for measuring the distance between two cities, and would also be absolutely useless for measuring the distance between two components on a microchip.
+
+Instead, a system which always introduces a constant relative error of **1%** can be used for all these applications consistently.
 
 
------Animation of relative error being scale-invariant-----
-
+<video width="100%" controls="controls" loop="loop" autoplay>
+  <source src="{{site.baseurl}}/images/floating_point/mp4s/AbsVsRelError.mp4" type="video/mp4">
+</video>
 
 ### The log approximation
 
@@ -83,7 +87,7 @@ The relative error is then
 
 $$\text{relative error}(x) = \frac{dx}{x}.$$
 
-The neat trick that allows us to relate the two errors elegantly is to observe that the relative error is actually the absolute error of the logarithm of the number:
+The neat trick is to observe that the relative error is actually the absolute error of the logarithm of the number:
 
 $$
 \large{
@@ -96,8 +100,6 @@ $$
 }
 $$
 
-<!-- {: style="background-color: #eeffee; padding: 10px; margin: 10px; border-radius: 5px;"} -->
-
 where we used the fact that the derivative of $\log x$ is $1/x$.
 
 So now, if we want a storage scheme that has a fixed relative error, we can simply **store the logarithm of the number using fixed point.**
@@ -107,15 +109,16 @@ This is essentially what floating point does!
   <source src="{{site.baseurl}}/images/floating_point/mp4s/LogFixedPoint.mp4" type="video/mp4">
 </video>
 
-Before moving forward, let's switch to binary numbers, since that's what computers  actually use in practice.
+Before moving forward, let's switch to binary numbers, since that's what computers actually use in practice.
 The same ideas of the logarithm and fixed point apply to binary numbers as well, since we simply have a different base for the log.
 In binary, the only digits -- rather bits -- are $0$ and $1$. For example, the decimal number $5.25$ would be represented as $101.01$ in binary.
+
 
 ## Floating Point Numbers
 
 Computing logarithms is a non-trivial operation in practice, and ideally we would like to avoid having to compute them just to store numbers.
 
-Instead, we can use a simple approximation to the logarithm is based on **scientific notation**.
+Instead, we can use a simple approximation to the logarithm based on **scientific notation**.
 
 We can rewrite a real number $x$ as
 
@@ -123,17 +126,40 @@ $$x = \pm \ (1 + m) \cdot 2^e$$
 
 where $m$ is a number between $0$ and $1$, and $e$ is an integer.
 
-Now, we can use the first order Taylor approximation of the logarithm to get
+Now, we can use a linear approximation (technically not Taylor since we are in base 2a) of the logarithm to get
 
 $$\log_2 x =  \log_2 (1 + m) + e \approx m + e.$$
 
+Now, we can store the sum $m + e$ using fixed point, with the binary point placed right between the bits of $m$ and $e$.a
+
+The exact choice of how many bits to use for $m$ and $e$ is determined by the **IEEE 754 standard** for floating point numbers. We won't get into all the nitty gritty details of the IEEE standard (like how to deal with 0 and inf) -- this [video by Jan Misali](https://www.youtube.com/watch?v=dQhj5RGtag0) does a splendid job of that. 
+
+Instead here's a brief illustration of the standard on some simple examples.
+
+
+The main takeaway I'd like to emphasize is:
 
 Floating point is fixed point in log space.
 {: style="font-size: 180%; text-align: center;"}
 
------Exact IEEE format for binary floating point numbers-----
 
-## Propagation of Relative Error
+This intuition is very powerful and illuminating. In fact, it is the basis for a famous algorithm to compute inverse square roots -- the **fast inverse square root** algorithm.
+
+### An aside: The Fast Inverse Square Root
+
+
+The inverse square root function $y = \frac{1}{\sqrt{x}}$ is non-trivial to compute and shows up a lot in applications involving computer graphics, like video games. 
+
+The core idea in the fast inverse square root algorithm is to realize that computing $\log y$ is much simpler -- in fact it is just $-\frac{1}{2} \log x$. 
+
+Since the bit representation of $x$ stored as a floating point number approximates the $\log x$, we can use this to approximately compute $\log y$ by simply working with the bits of $x$ instead of the floating point number itself. The resulting bits then represent $y$ when treated as a floating point number.
+
+A detailed and illuminating exposition can be found in this [video by Nemean](https://www.youtube.com/watch?v=p8u_k2LIZyo).
+
+
+# Propagation of Relative Error
+
+
 
 * Errors propagation via interval arithmetic.
 
