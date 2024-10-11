@@ -201,8 +201,12 @@ table {
 }
 
 .masthead {
-  padding: 20px 0;
   border-bottom: 1px solid $lightGray;
+  display: flex;
+  justify-content: space-between; /* Align site info on left, nav on right */
+  align-items: center; /* Vertically center elements */
+  flex-wrap: wrap; /* Allow wrapping on smaller screens */
+  padding: 20px 0px;
 
   @include mobile {
     text-align: center;
@@ -210,11 +214,8 @@ table {
 }
 
 .site-avatar {
-  float: left;
-  width: 70px;
-  height: 70px;
-  margin-right: 15px;
-
+  width: 100px;
+  height: 100px;
   @include mobile {
     float: none;
     display: block;
@@ -223,11 +224,13 @@ table {
 
   img {
     border-radius: 5px;
+	width: 100px;
+	height: 100px;
   }
 }
 
 .site-info {
-  float: left;
+  flex: 1 1 auto; /* Take up remaining space */
 
   @include mobile {
     float: none;
@@ -259,10 +262,11 @@ table {
 }
 
 nav {
-  float: right;
   margin-top: 23px; // @TODO: Vertically middle align
   font-family: $fontFamily;
   font-size: 20px;
+  flex: 1 1 auto; /* Take up remaining space */
+  text-align: right;
 
   @include mobile {
     float: none;
