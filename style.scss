@@ -205,7 +205,8 @@ table {
   display: flex;
   justify-content: space-between; /* Align site info on left, nav on right */
   align-items: center; /* Vertically center elements */
-  flex-wrap: wrap; /* Allow wrapping on smaller screens */
+  flex-flow: row wrap; /* Allow wrapping on smaller screens */
+  position: relative;
   padding: 20px 0px;
 
   @include mobile {
@@ -230,7 +231,7 @@ table {
 }
 
 .site-info {
-  flex: 1 1 auto; /* Take up remaining space */
+  flex: 1 1 auto;
 
   @include mobile {
     float: none;
@@ -265,8 +266,8 @@ nav {
   margin-top: 23px; // @TODO: Vertically middle align
   font-family: $fontFamily;
   font-size: 20px;
-  flex: 1 1 auto; /* Take up remaining space */
   text-align: right;
+  flex: 1 1 auto;
 
   @include mobile {
     float: none;
@@ -287,6 +288,23 @@ nav {
       color: $darkGray;
     }
   }
+}
+@media (max-width: 700px) {
+    .masthead {
+        flex-direction: column; /* Stack items vertically on small screens */
+        align-items: center; /* Center align all items */
+    }
+
+    .site-info, .site-avatar, nav {
+        flex-basis: 100%; /* Force each item to take full width in its own row */
+        margin-bottom: 20px; /* Add spacing between stacked items */
+		justify-content: center; /* Center the navigation on small screens */
+		text-align: center;
+    }
+
+    nav {
+        justify-content: center; /* Center the navigation on small screens */
+    }
 }
 
 //
