@@ -4,7 +4,8 @@ title: Perspectives on Floating Point
 watch: true
 excerpt: An illuminating perspective on floating point numbers that I haven't seen emphasized before.
 image:
-    path: images/floating_point/gifs/LogFixedPoint.gif
+    type: mp4
+    path: images/floating_point/mp4s/LogFixedPoint.mp4
     width: 90%
 comments: true
 ---

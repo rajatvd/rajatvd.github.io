@@ -4,7 +4,7 @@ title: Visualizing Tensor Operations with Factor Graphs
 watch: true
 excerpt: The factor graph is a beautiful tool for visualizating complex matrix operations and understanding tensor networks, as well as proving seemingly complicated properties through simple visual proofs.
 image:
-    path: images/factor_graphs/TraceCyclic.gif
+    path: images/factor_graphs/mp4s/TraceCyclic.mp4
     width: 90%
 comments: true
 
