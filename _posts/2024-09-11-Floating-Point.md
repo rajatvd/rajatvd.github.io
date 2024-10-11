@@ -29,7 +29,7 @@ Some approximation is necessary since real numbers are continuous and infinite, 
 
 A simple solution is **rounding** -- just round off the real number after some decimal places and store the remaining digits.
 
-<video width="100%" controls="controls" loop="loop" autoplay>
+<video width="100%" controls="controls" loop="loop" autoplay muted>
   <source src="{{site.baseurl}}/images/floating_point/mp4s/RoundOff.mp4" type="video/mp4">
 </video>
 
@@ -69,7 +69,7 @@ For example, if we are measuring lengths, having a constant absolute error of **
 Instead, a system which always introduces a constant relative error of **1%** can be used for all these applications consistently.
 
 
-<video width="100%" controls="controls" loop="loop" autoplay>
+<video width="100%" controls="controls" loop="loop" autoplay muted>
   <source src="{{site.baseurl}}/images/floating_point/mp4s/AbsVsRelError.mp4" type="video/mp4">
 </video>
 
@@ -106,7 +106,7 @@ where we used the fact that the derivative of $\log x$ is $1/x$.
 So now, if we want a storage scheme that has a fixed relative error, we can simply **store the logarithm of the number using fixed point.**
 This is essentially what floating point does!
 
-<video width="100%" controls="controls" loop="loop" autoplay>
+<video width="100%" controls="controls" loop="loop" autoplay muted>
   <source src="{{site.baseurl}}/images/floating_point/mp4s/LogFixedPoint.mp4" type="video/mp4">
 </video>
 
