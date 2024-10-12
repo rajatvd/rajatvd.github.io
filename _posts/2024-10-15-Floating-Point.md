@@ -213,10 +213,12 @@ Note that these conclusions apply even if we consider errors in $c$, though the 
 
 Another perspective to see the ill-conditioning of subtraction is to look at the bits of the result when we subtract two nearly equal floating point numbers.
 
-
 A large portion of the most significant bits of the two operands are equal, and they _catastrophically cancel_ to 0, leading to much fewer significant bits in the result -- which corresponds to a blow up of the relative error.
 
 
+<figure style="display:flex; justify-content:space-around">
+<img src="{{site.baseurl}}/images/floating_point/CatastrophicCancellation.svg" alt="Catastrophic Cancellation" style="width: 70%; max-width:700px;">
+</figure>
 
 The source of numerical instability in algorithms is almost always due to this ill-conditioning of subtraction. Even the extremely simple task of computing the identity function can suffer if done using (an obviously unnecessary, but illustrative) intermediate subtraction.
 
