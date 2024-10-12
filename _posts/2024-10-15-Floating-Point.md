@@ -35,7 +35,7 @@ A simple solution is **rounding** -- just round off the real number after some d
 
 The rounded numbers form a discrete set, and we can store a finite range of them using a fixed number of digits (or bits).
 
-Let's quantify the error introduced by this rounding. If x is the real number and round(x) is the rounded number, then the error is given by:
+Let's quantify the error introduced by this rounding. If $x$ is the real number and $\text{round}(x)$ is the rounded number, then the error is given by:
 
 $${\text{error}(x) = \vert x - \text{round}(x)\vert}.$$
 
@@ -64,7 +64,7 @@ $$\text{relative error}(x) = \frac{\text{error}(x)}{\vert x \vert}.$$
 
 Many applications are more interested in the relative error than the absolute error, because the relative error is **scale-invariant**. 
 
-For example, if we are measuring lengths, having a constant absolute error of **1cm** might be acceptable for measuing the height of a person, but would be completely overkill for measuring the distance between two cities, and would also be absolutely useless for measuring the distance between two components on a microchip.
+For example, if we are measuring lengths, having a constant absolute error of **1 cm** might be acceptable for measuing the height of a person, but would be completely overkill for measuring the distance between two cities, and would also be absolutely useless for measuring the distance between two components on a microchip.
 
 Instead, a system which always introduces a constant relative error of **1%** can be used for all these applications consistently.
 
@@ -73,7 +73,7 @@ Instead, a system which always introduces a constant relative error of **1%** ca
   <source src="{{site.baseurl}}/images/floating_point/mp4s/AbsVsRelError.mp4" type="video/mp4">
 </video>
 
-### The log approximation
+## The log approximation
 
 An elegant method of approximately converting absolute error to relative error is through the **logarithm**.
 
@@ -92,7 +92,7 @@ The neat trick is to observe that the relative error is actually the absolute er
 
 $$
 \large{
-\color{#338833}
+\color{#33AA33}
 \begin{align*}
 \text{error}(\log x) &= d(\log x) \\
 &= \frac{dx}{x} \\
@@ -119,24 +119,28 @@ In binary, the only digits -- rather bits -- are $0$ and $1$. For example, the d
 
 Computing logarithms is a non-trivial operation in practice, and ideally we would like to avoid having to compute them just to store numbers.
 
-Instead, we can use a simple approximation to the logarithm based on **scientific notation**.
+Instead, we can use a simple approximation of the logarithm based on **scientific notation**.
 
-We can rewrite a real number $x$ as
+We can rewrite a real number $x$ using scientific notation in base 2 as
 
 $$x = \pm \ (1 + m) \cdot 2^e$$
 
-where $m$ is a number between $0$ and $1$, and $e$ is an integer.
+where $m$, the **mantissa**, is a number between $0$ and $1$, and $e$, the **exponent** is an integer.
 
-Now, we can use a linear approximation (technically not Taylor since we are in base 2a) of the logarithm to get
+Now, we can use a linear approximation (technically not Taylor since we are in base 2) of the logarithm to get
 
 $$\log_2 x =  \log_2 (1 + m) + e \approx m + e.$$
 
-Now, we can store the sum $m + e$ using fixed point, with the binary point placed right between the bits of $m$ and $e$.a
+We can store the sum $m + e$ using fixed point, with the binary point placed right between the bits of $m$ and $e$ -- and this is essentially the floating point system!
 
 The exact choice of how many bits to use for $m$ and $e$ is determined by the **IEEE 754 standard** for floating point numbers. We won't get into all the nitty gritty details of the IEEE standard (like how to deal with 0 and inf) -- this [video by Jan Misali](https://www.youtube.com/watch?v=dQhj5RGtag0) does a splendid job of that. 
 
 Instead here's a brief illustration of the standard on some simple examples.
 
+An important bit of nomenclature -- the value of the constant relative error in floating point is called the **machine precision**. 
+
+* For 32-bit floats with 23-bit mantissas, the machine precision is $2^{-24} \approx 10^{-7}$. 
+* For 64-bit floats with 52-bit mantissas, the machine precision is $2^{-53} \approx 10^{-16}$.
 
 The main takeaway I'd like to emphasize is:
 
@@ -153,21 +157,98 @@ The inverse square root function $y = \frac{1}{\sqrt{x}}$ is non-trivial to comp
 
 The core idea in the fast inverse square root algorithm is to realize that computing $\log y$ is much simpler -- in fact it is just $-\frac{1}{2} \log x$. 
 
-Since the bit representation of $x$ stored as a floating point number approximates the $\log x$, we can use this to approximately compute $\log y$ by simply working with the bits of $x$ instead of the floating point number itself. The resulting bits then represent $y$ when treated as a floating point number.
+Since the bit representation of $x$ stored as a floating point number approximates $\log x$, we can use this to approximately compute $\log y$ by simply multiplying the bits of $x$ by $-1/2$ instead of working with the floating point number itself. The resulting bits then represent $y$ when treated as a floating point number.
 
 A detailed and illuminating exposition can be found in this [video by Nemean](https://www.youtube.com/watch?v=p8u_k2LIZyo).
 
 
 # Propagation of Relative Error
 
+Finally, let's investigate how errors propagate when we compute with floating point numbers. Again, we're interested specifically in the relative error. 
+
+A natural quantity to consider is the **relative conditioning** (denoted by $\kappa_f$) of an operation $f$.
+
+$$
+\large{
+\color{#33AA33}
+\begin{align*}
+\kappa_f  &= \frac{\text{relative error in output}}{\text{relative error in input}}\\
+&= \left\vert \frac{d (\log f(x))}{d (\log x)} \right\vert. \\
+\end{align*}
+}
+$$
+
+In the computer, all algorithms are ultimately a composition of the fundamental arithmetic operations -- addition, subtraction, multiplication and division. So, the relative error of the output of an algorithm is obtained by accumulating the relative errors of the fundamental operations that make up the algorithm.
+
+Let's consider the relative conditioning of the fundamental operations. We'll assume that the input is a single positive number $x$, and we perform the operation with a positive constant $c$.
+
+* **Addition**: $f(x) = x + c$. 
+
+$$\kappa_f = \frac{d (\log (x + c))}{d (\log x)} = \frac{|x|}{|x + c|}.$$
+
+* **Subtraction**: $f(x) = x - c$.
+
+$$\kappa_f = \frac{d (\log (x - c))}{d (\log x)} = \frac{|x|}{\color{red}|x - c|}.$$
+
+* **Multiplication**: $f(x) = x \cdot c$.
+
+$$\kappa_f = \frac{d (\log (x \cdot c))}{d (\log x)} = 1.$$
+
+* **Division**: $f(x) = x / c$.
+
+$$\kappa_f = \frac{d (\log (x / c))}{d (\log x)} = 1.$$
+
+The conditioning of addition, multiplication and division is bounded for all positive $x$. These operations are **well-conditioned**.
+
+However, the conditioning of subtraction can blow up to infinity when $x$ is close to $c$. 
+
+$$\color{red}\kappa_{\text{subtraction}} = \frac{|x|}{|x - c|} \rightarrow \infty \quad \text{as} \quad x \rightarrow c.$$
+
+**Subtraction is ill-conditioned**.
+
+Note that these conclusions apply even if we consider errors in $c$, though the math gets slightly more involved.
 
 
-* Errors propagation via interval arithmetic.
+## Catastrophic Cancellation
 
-* Conditioning is just the derivative.
-* Relative conditioning is just the derivative in log space.
-* Of the fundamental arithmetic operations, only subtraction is ill-conditioned.
-** Catastrophic cancellation perspective of ill-conditionness of subtraction.
-* Example of two ways to compute the same function, one of which is ill-conditioned.
+Another perspective to see the ill-conditioning of subtraction is to look at the bits of the result when we subtract two nearly equal floating point numbers.
 
----- Animation of subtraction being ill-conditioned ----
+
+A large portion of the most significant bits of the two operands are equal, and they _catastrophically cancel_ to 0, leading to much fewer significant bits in the result -- which corresponds to a blow up of the relative error.
+
+
+
+The source of numerical instability in algorithms is almost always due to this ill-conditioning of subtraction. Even the extremely simple task of computing the identity function can suffer if done using (an obviously unnecessary, but illustrative) intermediate subtraction.
+
+Consider two approaches to compute the identity function $f(x) = x$:
+
+1. **Intermediate subtraction**: $f_1(x) = (x + 5) - 5$.
+2. **Intermediate multiplication**: $f_2(x) = (x \cdot 5) \ / \ 5$.
+
+For $\vert x \vert \ll 1$, the first approach involves subtracting two nearly equal numbers, namely $x + 5$ and $5$. This results in a blow up of the relative error in the output. Such instability does not occur in the second approach, which involves well-conditioned multiplication and division operations.
+
+
+<figure style="display:flex; justify-content:space-around">
+  <img src="{{site.baseurl}}/images/floating_point/32bit.svg" alt="Identity Function" style="width:45%">
+  <img src="{{site.baseurl}}/images/floating_point/64bit.svg" alt="Identity Function" style="width:45%">
+</figure>
+
+The two floating point formats have different precisions, but the qualitative behavior is the same. For $\vert x\vert>1$, both approaches have a relative error around the machine precision. For $\vert x\vert \ll 1$, the relative error in the output of the intermediate subtraction approach blows up, while the intermediate multiplication approach remains stable. 
+
+
+You can find the code to generate the above plots in this simple [colab notebook](https://colab.research.google.com/drive/1oDTwyg3FTyDlofxk5Pfm1Z2aHXrMzB6m?usp=sharing).
+
+# Final Takeaways
+
+* Round off in a fixed point system results in **constant absolute error**.
+* Floating point is fixed point in log space.
+* Round off in floating point results in **constant relative error**.
+* **Catastrophic cancellation** -- numerical instability due to blow up of relative error when subtracting two nearly equal floating point numbers.
+
+
+# Useful Links
+
+* Jan Misali's video on [how floating point works](https://www.youtube.com/watch?v=dQhj5RGtag0).
+* Nemean's video on the [Fast Inverse Square Root](https://www.youtube.com/watch?v=p8u_k2LIZyo).
+* Interative website to play with floating point numbers -- [float.exposed](https://float.exposed/).
+
