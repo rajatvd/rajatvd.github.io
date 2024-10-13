@@ -237,8 +237,9 @@ For $\vert x \vert \ll 1$, the first approach involves subtracting two nearly eq
 
 The two floating point formats have different precisions, but the qualitative behavior is the same. For $\vert x\vert>1$, both approaches have a relative error around the machine precision. For $\vert x\vert \ll 1$, the relative error in the output of the intermediate subtraction approach blows up, while the intermediate multiplication approach remains stable. 
 
-
 You can find the code to generate the above plots in this simple [colab notebook](https://colab.research.google.com/drive/1oDTwyg3FTyDlofxk5Pfm1Z2aHXrMzB6m?usp=sharing).
+
+Catastrophic cancellation shows up in more practical scenarios as well -- like [computing variances](https://en.wikipedia.org/wiki/Algorithms_for_calculating_variance#Online_algorithm), solving [quadratic equations](https://people.csail.mit.edu/bkph/articles/Quadratics.pdf), [finite difference schemes](https://en.wikipedia.org/wiki/Numerical_differentiation#/media/File:AbsoluteErrorNumericalDifferentiationExample.png), [Gram-Schmidt orthogonalization](https://en.wikipedia.org/wiki/Gram%E2%80%93Schmidt_process#:~:text=.-,Numerical%20stability,-%5Bedit%5D) and many more.
 
 # Final Takeaways
 
