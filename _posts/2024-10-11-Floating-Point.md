@@ -109,7 +109,7 @@ The same ideas of the logarithm and fixed point apply to binary numbers as well,
 In binary, the only digits -- rather bits -- are $0$ and $1$. For example, the decimal number $5.25$ would be represented as $101.01$ in binary.
 
 
-## Floating Point Numbers
+# Floating Point Numbers
 
 Computing logarithms is a non-trivial operation in practice, and ideally we would like to avoid having to compute them just to store numbers.
 
