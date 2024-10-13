@@ -239,7 +239,7 @@ The two floating point formats have different precisions, but the qualitative be
 
 You can find the code to generate the above plots in this simple [colab notebook](https://colab.research.google.com/drive/1oDTwyg3FTyDlofxk5Pfm1Z2aHXrMzB6m?usp=sharing).
 
-Catastrophic cancellation shows up in more practical scenarios as well -- like [computing variances](https://en.wikipedia.org/wiki/Algorithms_for_calculating_variance#Online_algorithm), solving [quadratic equations](https://people.csail.mit.edu/bkph/articles/Quadratics.pdf), [finite difference schemes](https://en.wikipedia.org/wiki/Numerical_differentiation#/media/File:AbsoluteErrorNumericalDifferentiationExample.png), [Gram-Schmidt orthogonalization](https://en.wikipedia.org/wiki/Gram%E2%80%93Schmidt_process#:~:text=.-,Numerical%20stability,-%5Bedit%5D) and many more.
+Catastrophic cancellation shows up in more practical scenarios as well -- like [finite difference schemes](https://en.wikipedia.org/wiki/Numerical_differentiation#/media/File:AbsoluteErrorNumericalDifferentiationExample.png), [computing variances](https://en.wikipedia.org/wiki/Algorithms_for_calculating_variance#Online_algorithm:~:text=very%20similar%20numbers%2C-,cancellation%20can,-lead%20to%20the), [solving quadratic equations](https://people.csail.mit.edu/bkph/articles/Quadratics.pdf), [Gram-Schmidt orthogonalization](https://en.wikipedia.org/wiki/Gram%E2%80%93Schmidt_process#:~:text=.-,Numerical%20stability,-%5Bedit%5D) and many more.
 
 # Final Takeaways
 
