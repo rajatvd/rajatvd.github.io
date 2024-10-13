@@ -119,7 +119,7 @@ We can rewrite a real number $x$ using scientific notation in base 2 as
 
 $$x = \pm \ (1 + m) \cdot 2^e$$
 
-where $m$, the **mantissa**, is a number between $0$ and $1$, and $e$, the **exponent** is an integer.
+where $m$, the **mantissa**, is a real number between $0$ and $1$, and $e$, the **exponent** is an integer.
 
 Now, we can use a linear approximation (technically not Taylor since we are in base 2) of the logarithm to get
 
