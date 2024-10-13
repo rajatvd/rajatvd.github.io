@@ -139,6 +139,8 @@ Instead here's a brief illustration of the standard on a simple example.
   <source src="{{site.baseurl}}/images/floating_point/mp4s/IEEE.mp4" type="video/mp4">
 </video>
 
+You can interactively play with floating point numbers on this great website by Bartosz Ciechanowski -- [float.exposed](https://float.exposed/).
+
 An important bit of nomenclature -- the value of the constant relative error in floating point is called the **machine precision**. 
 
 * For 32-bit floats with 23-bit mantissas, the machine precision is $2^{-24} \approx 10^{-7}$. 
@@ -254,5 +256,5 @@ You can find the code to generate the above plots in this simple [colab notebook
 
 * Jan Misali's video on [how floating point works](https://www.youtube.com/watch?v=dQhj5RGtag0).
 * Nemean's video on the [Fast Inverse Square Root](https://www.youtube.com/watch?v=p8u_k2LIZyo).
-* Interative website to play with floating point numbers -- [float.exposed](https://float.exposed/).
+* Interative website by Bartosz Ciechanowski to play with floating point numbers -- [float.exposed](https://float.exposed/).
 
