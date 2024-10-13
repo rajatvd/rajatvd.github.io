@@ -253,4 +253,6 @@ You can find the code to generate the above plots in this simple [colab notebook
 * Jan Misali's video on [how floating point works](https://www.youtube.com/watch?v=dQhj5RGtag0).
 * Nemean's video on the [Fast Inverse Square Root](https://www.youtube.com/watch?v=p8u_k2LIZyo).
 * Interative website by Bartosz Ciechanowski to play with floating point numbers -- [float.exposed](https://float.exposed/).
+* [Colab notebook](https://colab.research.google.com/drive/1oDTwyg3FTyDlofxk5Pfm1Z2aHXrMzB6m?usp=sharing) to generate the relative error plots. 
+* [Code](https://github.com/rajatvd/floating-point) to generate the animations in this post using `manim`.
 
