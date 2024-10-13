@@ -39,7 +39,7 @@ $${\text{error}(x) = \vert x - \text{round}(x)\vert}.$$
 
 This error is called **round-off error**.
 
-An interesting property of this method is that the round-off error is independent of the **magnitude** of the number being stored.
+An interesting property of this method is that the maximum round-off error is independent of the **magnitude** of the number being stored.
 In the above example, we know that the error is at most $0.05$ for any number $x$.
 
 This is because the decimal point is **fixed**.
