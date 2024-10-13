@@ -390,6 +390,27 @@ details[open] summary {
     margin-bottom: .5em;
 }
 
+// floating point
+.floating-point-plots-fig {
+  display: flex;
+  justify-content: space-around; /* Align site info on left, nav on right */
+}
+.floating-point-plots-fig img {
+  width: 45%;
+  margin: 0;
+}
+
+@media (max-width: 1000px) {
+  .floating-point-plots-fig {
+	flex-direction: column; /* Stack items vertically on small screens */
+	align-items: center; /* Center align all items */
+  }
+
+  .floating-point-plots-fig img {
+	width: 90%;
+	margin: 0;
+  }
+}
 
 
 // Settled on moving the import of syntax highlighting to the bottom of the CSS

@@ -230,9 +230,9 @@ Consider two approaches to compute the identity function $f(x) = x$:
 For $\vert x \vert \ll 1$, the first approach involves subtracting two nearly equal numbers, namely $x + 5$ and $5$. This results in a blow up of the relative error in the output. Such instability does not occur in the second approach, which involves well-conditioned multiplication and division operations.
 
 
-<figure style="display:flex; justify-content:space-around">
-  <img src="{{site.baseurl}}/images/floating_point/32bit.svg" alt="Identity Function" style="width:45%">
-  <img src="{{site.baseurl}}/images/floating_point/64bit.svg" alt="Identity Function" style="width:45%">
+<figure class="floating-point-plots-fig">
+  <img src="{{site.baseurl}}/images/floating_point/32bit.svg" alt="Identity Function" class="floating-point-plots-img">
+  <img src="{{site.baseurl}}/images/floating_point/64bit.svg" alt="Identity Function" class="floating-point-plots-img">
 </figure>
 
 The two floating point formats have different precisions, but the qualitative behavior is the same. For $\vert x\vert>1$, both approaches have a relative error around the machine precision. For $\vert x\vert \ll 1$, the relative error in the output of the intermediate subtraction approach blows up, while the intermediate multiplication approach remains stable. 
