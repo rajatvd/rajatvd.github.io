@@ -23,8 +23,6 @@ comments: true
 How do we store real numbers in a computer?
 {: style="font-size: 120%; text-align: center;"}
 
-<!-- ### Prelude -- Fixed Point Numbers -->
-
 Some approximation is necessary since real numbers are continuous and infinite, while computers have finite memory.
 
 A simple solution is **rounding** -- just round off the real number after some decimal places and store the remaining digits.
@@ -135,7 +133,11 @@ We can store the sum $m + e$ using fixed point, with the binary point placed rig
 
 The exact choice of how many bits to use for $m$ and $e$ is determined by the **IEEE 754 standard** for floating point numbers. We won't get into all the nitty gritty details of the IEEE standard (like how to deal with 0 and inf) -- this [video by Jan Misali](https://www.youtube.com/watch?v=dQhj5RGtag0) does a splendid job of that. 
 
-Instead here's a brief illustration of the standard on some simple examples.
+Instead here's a brief illustration of the standard on a simple example.
+
+<video width="100%" controls="controls" loop="loop" autoplay muted>
+  <source src="{{site.baseurl}}/images/floating_point/mp4s/IEEE.mp4" type="video/mp4">
+</video>
 
 An important bit of nomenclature -- the value of the constant relative error in floating point is called the **machine precision**. 
 
