@@ -3,19 +3,31 @@ layout: default
 ---
 
 <div class="posts">
-  {% for post in site.posts %}
-    <article class="post">
+	{% for post in site.posts %}
+	<article class="post">
 
-      <h1><a href="{{ site.baseurl }}{{ post.url }}">{{ post.title }}</a></h1>
+		<h1><a href="{{ site.baseurl }}{{ post.url }}">{{ post.title }}</a></h1>
 
-      <div class="entry">
-	  	<figure style="margin: 20px auto; text-align: center;" width='100%'>
-	      <img src="{{ post.image.path }}" alt='missing' width='{{post.image.width}}' style='margin:20px auto; display:inline-block' text-align='center'/>
-		</figure>
-		<p>{{ post.excerpt }}</p>
-      </div>
+		<div class="entry">
+			{% assign ext = post.image.path | split: "." | last %}
+			{% if ext == 'mp4' %}
 
-      <a href="{{ site.baseurl }}{{ post.url }}" class="read-more">Read More</a>
-    </article>
-  {% endfor %}
+			<video width="100%" loop="loop" autoplay muted>
+				<source src="{{site.baseurl}}/{{ post.image.path }}" type="video/mp4">
+			</video>
+
+			{% else %}
+
+			<figure style="margin: 20px auto; text-align: center;" width='100%'>
+				<img src="{{site.baseurl}}/{{ post.image.path }}" alt='missing' width='{{post.image.width}}'
+					style='margin:20px auto; display:inline-block' text-align='center' />
+			</figure>
+			{% endif %}
+
+			<p>{{ post.excerpt }}</p>
+		</div>
+
+		<a href="{{ site.baseurl }}{{ post.url }}" class="read-more">Read More</a>
+	</article>
+	{% endfor %}
 </div>

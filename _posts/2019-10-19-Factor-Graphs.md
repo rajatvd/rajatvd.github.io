@@ -4,7 +4,7 @@ title: Visualizing Tensor Operations with Factor Graphs
 watch: true
 excerpt: The factor graph is a beautiful tool for visualizating complex matrix operations and understanding tensor networks, as well as proving seemingly complicated properties through simple visual proofs.
 image:
-    path: images/factor_graphs/TraceCyclic.gif
+    path: images/factor_graphs/mp4s/TraceCyclic.mp4
     width: 90%
 comments: true
 
@@ -63,7 +63,7 @@ A general sum-product expression with multiple tensors of different sizes is cal
 
 We can build the graph pretty easily. Let's go back to the example and see what's going on (you can pause the visualizations if they seem too fast at first.)
 
-<video width="100%" controls="controls" loop="loop" autoplay>
+<video width="100%" controls="controls" loop="loop" autoplay muted>
   <source src="{{site.baseurl}}/images/factor_graphs/mp4s-720p/IntroFG.mp4" type="video/mp4">
 </video>
 
@@ -99,31 +99,31 @@ Why is this representation useful? Well, it allows us to transform complicated f
 
 ## Matrix-Vector Multiplication
 
-<video width="100%" controls="controls" loop="loop" autoplay>
+<video width="100%" controls="controls" loop="loop" autoplay muted>
   <source src="{{site.baseurl}}/images/factor_graphs/mp4s-720p/MatVec.mp4" type="video/mp4">
 </video>
 
 ## Matrix-Matrix Multiplication
 
-<video width="100%" controls="controls" loop="loop" autoplay>
+<video width="100%" controls="controls" loop="loop" autoplay muted>
   <source src="{{site.baseurl}}/images/factor_graphs/mp4s-720p/MatMul.mp4" type="video/mp4">
 </video>
 
 ## Element-wise Product
 
-<video width="100%" controls="controls" loop="loop" autoplay>
+<video width="100%" controls="controls" loop="loop" autoplay muted>
   <source src="{{site.baseurl}}/images/factor_graphs/mp4s-720p/Hadamard.mp4" type="video/mp4">
 </video>
 
 ## Outer Product
 
-<video width="100%" controls="controls" loop="loop" autoplay>
+<video width="100%" controls="controls" loop="loop" autoplay muted>
   <source src="{{site.baseurl}}/images/factor_graphs/mp4s-720p/OuterProduct.mp4" type="video/mp4">
 </video>
 
 ## Trace
 
-<video width="100%" controls="controls" loop autoplay>
+<video width="100%" controls="controls" loop autoplay muted>
   <source src="{{site.baseurl}}/images/factor_graphs/mp4s-720p/Trace.mp4" type="video/mp4">
 </video>
 
@@ -138,7 +138,7 @@ We can go beyond just understanding numpy operations and make short work of math
 
 ## Trace is Cyclic
 
-<video width="100%" controls="controls" loop autoplay>
+<video width="100%" controls="controls" loop autoplay muted>
   <source src="{{site.baseurl}}/images/factor_graphs/mp4s-720p/TraceCyclic.mp4" type="video/mp4">
 </video>
 
@@ -176,7 +176,7 @@ It's easy to see that these operations preserve the final contracted state of th
 
 The first operation, sum, is pretty self-explanatory. It's basically the `numpy.sum` operation applied on the corresponding axis. This involves summing tensors of size equal to the product of sizes of all other axes, and the number of these tensors is the size of the axis being summed. So the total number of additions is just the product of all the edge sizes. This can be gleaned from the visual representation as well:
 
-<video width="100%" controls="controls" loop="loop" autoplay>
+<video width="100%" controls="controls" loop="loop" autoplay muted>
   <source src="{{site.baseurl}}/images/factor_graphs/mp4s-720p/SumVar.mp4" type="video/mp4">
 </video>
 
@@ -189,7 +189,7 @@ $$A_{ij} B_{kl} -> (AB)_{ijkl}$$
 
 The product takes each element in one factor and multiplies it with a _whole_ copy of the other factor. So the size of the final result is the product of the total sizes of the individual factors, which is much larger. Each element of the final product is just the result of multiplying two numbers, so the total number of multiplications is the total number of entries in the final product. This is easy to visualize again:
 
-<video width="100%" controls="controls" loop="loop" autoplay>
+<video width="100%" controls="controls" loop="loop" autoplay muted>
   <source src="{{site.baseurl}}/images/factor_graphs/mp4s-720p/CombineFactors.mp4" type="video/mp4">
 </video>
 

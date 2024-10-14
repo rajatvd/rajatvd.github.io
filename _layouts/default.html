@@ -1,20 +1,25 @@
 <!DOCTYPE html>
 <html>
-  <head>
-    <title>{% if page.title %}{{ page.title }} – {% endif %}{{ site.name }} – {{ site.description }}</title>
 
-    {% include meta.html %}
+<head>
+	<title>{% if page.title %}{{ page.title }} – {% endif %}{{ site.name }}</title>
 
-    <!--[if lt IE 9]>
+	{% include meta.html %}
+
+	<!--[if lt IE 9]>
       <script src="http://html5shiv.googlecode.com/svn/trunk/html5.js"></script>
     <![endif]-->
 
-    <link rel="stylesheet" type="text/css" href="{{ site.baseurl }}/style.css" />
-    <link rel="alternate" type="application/rss+xml" title="{{ site.name }} - {{ site.description }}" href="{{ site.baseurl }}/feed.xml" />
-    <link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/katex@1.0.0/dist/katex.min.css" integrity="sha384-zB1R0rpPzHqg7Kpt0Aljp8JPLqbXI3bhnPWROx27a9N0Ll6ZP/+DiW/UqRcLbRjq" crossorigin="anonymous">
+	<link rel="stylesheet" type="text/css" href="{{ site.baseurl }}/style.css" />
+	<link rel="alternate" type="application/rss+xml" title="{{ site.name }} - {{ site.description }}"
+		href="{{ site.baseurl }}/feed.xml" />
+	<!-- <link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/katex@1.0.0/dist/katex.min.css" -->
+	<!-- integrity="sha384-zB1R0rpPzHqg7Kpt0Aljp8JPLqbXI3bhnPWROx27a9N0Ll6ZP/+DiW/UqRcLbRjq" crossorigin="anonymous"> -->
+	<!-- <link href="https://fonts.googleapis.com/css2?family=Cascadia+Code:wght@400&display=swap" rel="stylesheet"> -->
 
 
-	<script type="text/x-mathjax-config"> MathJax.Hub.Config({ TeX: { equationNumbers: { autoNumber: "all" }, extensions:["color.js"] } }); </script>
+	<script
+		type="text/x-mathjax-config"> MathJax.Hub.Config({ TeX: { equationNumbers: { autoNumber: "all" }, extensions:["color.js"] } }); </script>
 
 	<script type="text/x-mathjax-config">
 		MathJax.Hub.Config({
@@ -26,12 +31,13 @@
 	</script>
 
 
-	<script src="https://cdn.mathjax.org/mathjax/latest/MathJax.js?config=TeX-AMS-MML_HTMLorMML" type="text/javascript"></script>
+	<script src="https://cdn.mathjax.org/mathjax/latest/MathJax.js?config=TeX-AMS-MML_HTMLorMML"
+		type="text/javascript"></script>
 
 
 
 
-<!--	<script type="text/x-mathjax-config">
+	<!--	<script type="text/x-mathjax-config">
 		MathJax.Hub.Config({
 			extensions: ["tex2jax.js"],
 			jax: ["input/TeX", "output/HTML-CSS"],
@@ -49,42 +55,47 @@
 	  src="https://cdnjs.cloudflare.com/ajax/libs/mathjax/2.7.4/MathJax.js?config=TeX-MML-AM_CHTML">
 	  </script>
 -->
-    <!-- Created with Jekyll Now - http://github.com/barryclark/jekyll-now -->
-  </head>
+	<!-- Created with Jekyll Now - http://github.com/barryclark/jekyll-now -->
+</head>
 
-  <body>
-    <div class="wrapper-masthead">
-      <div class="container">
-        <header class="masthead clearfix">
-<!---          <a href="{{ site.baseurl }}/" class="site-avatar"><img src="{{ site.avatar }}" /></a>
--->
+<link rel="shortcut icon" type="image/png" href="{{site.baseurl}}/images/logo_static.png">
 
-          <div class="site-info">
-            <h1 class="site-name"><a href="{{ site.baseurl }}/">{{ site.name }}</a></h1>
-            <p class="site-description">{{ site.description }}</p>
-          </div>
+<body>
+	<div class="non-footer-wrapper">
+		<div class="wrapper-masthead">
+			<div class="container">
+				<header class="masthead clearfix">
 
-          <nav>
-            <a href="{{ site.baseurl }}/">Blog</a>
-            <a href="{{ site.baseurl }}/projects">Projects</a>
-            <a href="{{ site.baseurl }}/about">About</a>
-          </nav>
-        </header>
-      </div>
-    </div>
+					<div class="site-info">
+						<h1 class="site-name"><a href="{{ site.baseurl }}/">{{ site.name }}</a></h1>
+						<p class="site-description">{{ site.description }}</p>
+					</div>
 
-    <div id="main" role="main" class="container">
-      {{ content }}
-    </div>
+					<a href="{{ site.baseurl }}/" class="site-avatar"><img
+							src="{{ site.baseurl }}/{{ site.avatar }}" /></a>
+					<nav>
+						<a href="{{ site.baseurl }}/">Blog</a>
+						<a href="{{ site.baseurl }}/projects">Projects</a>
+						<a href="{{ site.baseurl }}/about">About</a>
+					</nav>
+				</header>
+			</div>
+		</div>
 
-    <div class="wrapper-footer">
-      <div class="container">
-        <footer class="footer">
-          {% include svg-icons.html %}
-        </footer>
-      </div>
-    </div>
+		<div id="main" role="main" class="container">
+			{{ content }}
+		</div>
 
-    {% include analytics.html %}
-  </body>
+	</div>
+	<div class="wrapper-footer">
+		<div class="container">
+			<footer class="footer">
+				{% include svg-icons.html %}
+			</footer>
+		</div>
+	</div>
+
+	{% include analytics.html %}
+</body>
+
 </html>

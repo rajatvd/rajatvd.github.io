@@ -2,6 +2,7 @@
 //
 // VARIABLES
 //
+@import url('https://fonts.googleapis.com/css2?family=Montserrat:ital,wght@0,100..900;1,100..900&display=swap');
 
 // Colors
 $blue: #4183C4;
@@ -13,11 +14,23 @@ $darkGray: #333;
 $gray: #666;
 $lightGray: #eee;
 $white: #fff;
+// $bgGradColor: #c8e6c9;
+// $bgGradColor: #CFFAB0;
+// $bgGradColor: #DEFFDC;
+// $bgGradColor: #F0FFEF;
+// $bgGradColor: #E8FFE6;
+$bgGradColor: #E4FFE1;
+// $bgGradColor: #ffffff; // to effectively have no bg gradients
 
 // Font stacks
 $helvetica: Helvetica, Arial, sans-serif;
 $helveticaNeue: "Helvetica Neue", Helvetica, Arial, sans-serif;
-$georgia: Georgia, serif;
+// $fontFamily: "Cascadia Code", mono;
+// $fontFamily: Georgia, serif;
+$fontFamily: Montserrat, sans-serif;
+// $fontFamily: cursive;
+// $fontFamily: Roboto, sans-serif;
+// $fontFamily: "Proxima Nova", sans-serif;
 
 // Mobile breakpoints
 @mixin mobile {

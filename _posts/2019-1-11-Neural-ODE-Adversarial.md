@@ -4,7 +4,7 @@ title: Neural Ordinary Differential Equations and Adversarial Attacks
 watch: true
 excerpt:  I experiment with Neural ODEs and touch on parallels between adversarial robustness and equilibria of dynamical systems.
 image:
-    path: /images/neural_ode/cover.png
+    path: images/neural_ode/cover.png
     width: 90%
 comments: true
 
