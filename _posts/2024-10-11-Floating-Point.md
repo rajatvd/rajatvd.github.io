@@ -23,7 +23,7 @@ comments: true
 How do we store real numbers in a computer?
 {: style="font-size: 120%; text-align: center;"}
 
-Some approximation is necessary since real numbers are continuous and infinite, while computers have finite memory.
+Some approximation is necessary since there are an infinite number of real numbers -- even in a bounded range like between 0 and 1 -- while computers have finite memory.
 
 A simple solution is **rounding** -- just round off the real number after some decimal places and store the remaining digits.
 
