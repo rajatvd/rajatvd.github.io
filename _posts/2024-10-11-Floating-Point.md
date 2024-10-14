@@ -42,13 +42,13 @@ This error is called **round-off error**.
 An interesting property of this method is that the maximum round-off error is independent of the **magnitude** of the number being stored.
 In the above example, we know that the error is at most $0.05$ for any number $x$.
 
-This is because the decimal point is **fixed**.
+This is because the decimal point is fixed -- which is why this is called a **fixed point** scheme.
 
 In fact, this error depends only on which decimal place we round off at. For example, if we round off at the 2nd decimal place instead of the first, then the error is always at most $0.005$. In general,  
 
-$$\text{error}(x) \leq 0.5 \cdot 10^{-d}$$
+$$\text{error}(x) \leq 0.5 \cdot 10^{-p}$$
 
-where $d$ is the decimal place we round off at.
+where $p$ is the decimal place we round off at.
 
 ## Absolute vs Relative Error
 
