@@ -11,7 +11,7 @@ comments: true
 ---
 
 <figure style="margin: 20px auto; text-align: center; width:100%" vertical-align='middle'>
-    <img src='/images/word_gen/cover.png' alt='cover' width='90%' style='margin:20px 3%; display:inline-block' text-align='center' vertical-align='middle'/>
+    <img src='{{site.baseurl}}/images/word_gen/cover.png' alt='cover' width='90%' style='margin:20px 3%; display:inline-block' text-align='center' vertical-align='middle'/>
 
 
 </figure>
@@ -22,7 +22,7 @@ In this post, I'm going to go over a recent project of mine in which I investiga
 I used a simple generative character level recurrent decoder model to generate the words character by character. This means that the output of the model is a probability over characters, and the input is the previously generated character. I condition the model on the meaning of the word by initializing the hidden state of the RNN based on the word embedding. In particular, I pass the word vector through a simple fully connected layer and use that to initialize the hidden state of the RNN.
 
 <figure style="margin: 20px auto; text-align: center; width:100%" vertical-align='middle'>
-    <img src='/images/word_gen/model.png' alt='model' width='80%' style='margin:20px 3%; display:inline-block' text-align='center' vertical-align='middle'/>
+    <img src='{{site.baseurl}}/images/word_gen/model.png' alt='model' width='80%' style='margin:20px 3%; display:inline-block' text-align='center' vertical-align='middle'/>
 
     <figcaption>The model architecture of the character level decoder</figcaption>
 </figure>
@@ -41,7 +41,7 @@ To make the network generate more 'original' words, I tried to add regularizatio
 To sample words from the decoder, we need to feed in the output of a previous time step as the input to the next timestep. In particular, we need to find the word with the highest probability given the input embedding. The probability of a word being generated is obtained by multiplying the probabilities of generating each of its characters. This is made clear in the diagram below:
 
 <figure style="margin: 20px auto; text-align: center; width:100%" vertical-align='middle'>
-    <img src='/images/word_gen/word_probab.png' alt='model' width='90%' style='margin:20px 3%; display:inline-block' text-align='center' vertical-align='middle'/>
+    <img src='{{site.baseurl}}/images/word_gen/word_probab.png' alt='model' width='90%' style='margin:20px 3%; display:inline-block' text-align='center' vertical-align='middle'/>
 
     <figcaption>The probability of generating the word <i>cat</i> is found by feeding in the characters of the word as input and multiplying the corresponding output probabilities.</figcaption>
 </figure>
@@ -54,7 +54,7 @@ It is intractable to search through all possible words to find the one with the 
 * We can do much better with a minimal increase in effort, by generalizing it to take the $k$ most likely characters at each step and keeping a track of only the top $k$ words with highest probabilities. These $k$ words form a so-called _beam_ of samples, so this algorithm is called _beam search_.
 
 <figure style="margin: 20px auto; text-align: center; width:100%" vertical-align='middle'>
-    <img src='/images/word_gen/beam_search.png' alt='model' width='90%' style='margin:20px 3%; display:inline-block' text-align='center' vertical-align='middle'/>
+    <img src='{{site.baseurl}}/images/word_gen/beam_search.png' alt='model' width='90%' style='margin:20px 3%; display:inline-block' text-align='center' vertical-align='middle'/>
 
     <figcaption>The beam search algorithm with an example input and output and a beam size of $3$. The word vector for <i>musical</i> is passed through the model, with some noise. The words in each column are sorted in descending order of probabilities. Only the top $k$ words are used to expand the beam. The word with the highest probability at the end is <i>melodynamic</i>.</figcaption>
 </figure>

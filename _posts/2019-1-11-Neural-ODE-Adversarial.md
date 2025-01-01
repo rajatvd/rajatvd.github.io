@@ -51,7 +51,7 @@ Where $\theta$ denotes the parameters of the neural network. When this ODE is so
 
 
 <figure style="margin: 20px auto; text-align: center; width:100%" vertical-align='middle'>
-    <img src='/images/neural_ode/cover.png' alt='cover' width='90%' style='margin:20px 3%; display:inline-block' text-align='center' vertical-align='middle'/>
+    <img src='{{site.baseurl}}/images/neural_ode/cover.png' alt='cover' width='90%' style='margin:20px 3%; display:inline-block' text-align='center' vertical-align='middle'/>
     <figcaption>Analogy between ResNets and ODE-nets.<br>
 
     Top: A typical ResNet, depicted slightly differently from the conventional "skip-connection" view. The hidden layer activation $z$ can be thought of as a state propagating through layer depth, with the neural networks determining how it changes at each layer. Bottom: A visual depiction of how an ODE-net works. The state $z(t)$ propagates through time, with dynamics parameterized by a neural network. An ODE solver uses the neural network to evaluate the time derivative of the state at different time points and uses this to find the solution of the ODE. Note that both these networks preserve the size of the input vector.</figcaption>
@@ -64,7 +64,7 @@ Advanced ODE solvers differ from the simple Euler method in multiple aspects:
 
 
 <figure style="margin: 20px auto; text-align: center; width:60%" vertical-align='middle'>
-    <img src='/images/neural_ode/resnet-vs-odenet-paper.PNG' alt='cover' width='90%' style='margin:20px 3%; display:inline-block' text-align='center' vertical-align='middle'/>
+    <img src='{{site.baseurl}}/images/neural_ode/resnet-vs-odenet-paper.PNG' alt='cover' width='90%' style='margin:20px 3%; display:inline-block' text-align='center' vertical-align='middle'/>
     <figcaption>ResNets are evaluated at fixed intervals of "time" or layer depth, whereas ODE-nets can be evaluated at arbitrary time points using different types of ODE solvers.</figcaption>
 </figure>
 
@@ -165,8 +165,8 @@ Apart from messing around with end times while training, I also adversarially tr
 * Adversarially trained ODE networks exhibited much better performance for further end times than ones which weren't trained adversarially. This probably means that these ODEs settle to some sort of equilibrium which is unique to the class of the input (because the subsequent fully-connected layer is still able to distinguish between the final states) and adversarial inputs are also pulled towards these equilibria. The graphs below show the performances of the two networks for a range of end times.
 
 <figure style="margin: 20px auto; text-align: center;">
-    <img src='/images/neural_ode/adv_trained_stability_3.png' alt='adv_trained_timetest' width='40%' style='margin:20px 50px; display:inline-block' text-align='center'/>
-    <img src='/images/neural_ode/normal_trained_time.png' alt='adv_trained_timetest' width='40%' style='margin:20px 50px; display:inline-block' text-align='center'/>
+    <img src='{{site.baseurl}}/images/neural_ode/adv_trained_stability_3.png' alt='adv_trained_timetest' width='40%' style='margin:20px 50px; display:inline-block' text-align='center'/>
+    <img src='{{site.baseurl}}/images/neural_ode/normal_trained_time.png' alt='adv_trained_timetest' width='40%' style='margin:20px 50px; display:inline-block' text-align='center'/>
 
     <figcaption>Comparing the performances of a normally trained and adversarially trained ODE-net over a range of end times. Both nets have the same architecture, and were trained with an end time of $t=1$. It's clear that the adversarially trained network persists its performance for a much larger time range than the normally trained one. This could be interpreted as the ODE reaching an equilibrium which is specific to the class of the input, because the subsequent fully-connected layer is still able to fairly distinguish between the final states even for large end times. </figcaption>
 </figure>
@@ -174,8 +174,8 @@ Apart from messing around with end times while training, I also adversarially tr
 We can visualize the state of the ODE-net evolving through time to get a better idea of what's going on. Note that, to display the state as an image, we have to normalize the values of the state to the range $[0,1]$, so it's not a completely faithful representation of the state, though it will still provide some insight into the dynamics.
 
 <figure style="margin: 20px auto; text-align: center;">
-    <img src='/images/neural_ode/time_adv6_64x10x10_0-10-300.gif' alt='adv_trained' width='30%' style='margin:20px 50px; display:inline-block' text-align='center'/>
-    <img src='/images/neural_ode/time_nonadv_run48_64x10x10_0-10-300.gif' alt='non_adv' width='30%' style='margin:20px 50px; display:inline-block' text-align='center'/>
+    <img src='{{site.baseurl}}/images/neural_ode/time_adv6_64x10x10_0-10-300.gif' alt='adv_trained' width='30%' style='margin:20px 50px; display:inline-block' text-align='center'/>
+    <img src='{{site.baseurl}}/images/neural_ode/time_nonadv_run48_64x10x10_0-10-300.gif' alt='non_adv' width='30%' style='margin:20px 50px; display:inline-block' text-align='center'/>
 
     <figcaption>Evolution of a part of the state of the neural ODE trained for an end time of $t=1$ with an input digit '6'. <br>Left: Adversarially trained network which remains relatively constant after $t=1$ leading to higher accuracies for larger end times. The slow changes in the state are hard to notice with just our eye. Right: Normally trained network (same hyperparameters) with much more noticeable changes after $t=1$. The state seems to eventually saturate.</figcaption>
 </figure>
@@ -185,15 +185,15 @@ It seems like the adversarially trained ODE state settles down faster than the n
 I performed the same visualization for two different input digits, over a much larger time-scale so that the steady state becomes more apparent.
 
 <figure style="margin: 20px auto; text-align: center;">
-    <img src='/images/neural_ode/adv6_normal6_64x10x10_0-1000-300.gif' alt='adv6_normal6' width='30%' style='margin:20px 50px; display:inline-block' text-align='center'/>
-    <img src='/images/neural_ode/adv6_normal4_64x10x10_0-1000-300.gif' alt='adv6_normal4' width='30%' style='margin:20px 50px; display:inline-block' text-align='center'/>
+    <img src='{{site.baseurl}}/images/neural_ode/adv6_normal6_64x10x10_0-1000-300.gif' alt='adv6_normal6' width='30%' style='margin:20px 50px; display:inline-block' text-align='center'/>
+    <img src='{{site.baseurl}}/images/neural_ode/adv6_normal4_64x10x10_0-1000-300.gif' alt='adv6_normal4' width='30%' style='margin:20px 50px; display:inline-block' text-align='center'/>
 
     <figcaption>Evolution of a part of the state of the same adversarially trained neural ODE which was trained with an end time of $t=1$, for two different inputs. The left is with an input digit $6$, while the right is with an input digit $4$. Notice that both reach steady state pretty quickly. More importantly, one can clearly distinguish between the steady states reached for the two different inputs. This means that the network has learnt to push inputs of different classes to different equilibria or steady states.</figcaption>
 </figure>
 
 <figure style="margin: 20px auto; text-align: center;">
-    <img src='/images/neural_ode/48_normal6_64x10x10_0-1000-300.gif' alt='48_normal6' width='30%' style='margin:20px 50px; display:inline-block' text-align='center'/>
-    <img src='/images/neural_ode/48_normal4_64x10x10_0-1000-300.gif' alt='48_normal4' width='30%' style='margin:20px 50px; display:inline-block' text-align='center'/>
+    <img src='{{site.baseurl}}/images/neural_ode/48_normal6_64x10x10_0-1000-300.gif' alt='48_normal6' width='30%' style='margin:20px 50px; display:inline-block' text-align='center'/>
+    <img src='{{site.baseurl}}/images/neural_ode/48_normal4_64x10x10_0-1000-300.gif' alt='48_normal4' width='30%' style='margin:20px 50px; display:inline-block' text-align='center'/>
 
     <figcaption>Evolution of part of the state of the normally trained neural ODE which was trained with an end time of $t=1$ for the same two input images as the previous figure. The steady states reached for the two inputs look more or less the same. The network probably hasn't learned separate equilibria or steady-states for the classes as in the previous case.</figcaption>
 </figure>
