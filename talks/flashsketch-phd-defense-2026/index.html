@@ -1,0 +1,190 @@
+<!doctype html>
+<html lang="en">
+<head>
+<meta charset="utf-8">
+<meta name="viewport" content="width=device-width, initial-scale=1">
+<title>FlashSketch</title>
+<style>
+html,
+body {
+  width: 100%;
+  height: 100%;
+  margin: 0;
+  overflow: hidden;
+  background: #f6f3ea;
+}
+video {
+  display: block;
+  width: 100vw;
+  height: 100vh;
+  margin: 0;
+  background: #f6f3ea;
+  object-fit: contain;
+}
+</style>
+<script>
+document.addEventListener('DOMContentLoaded', () => {
+  const video = document.getElementById('deck');
+  const EPSILON_SECONDS = 0.035;
+  let checkpoints = [0];
+  let currentIndex = 0;
+  let targetIndex = null;
+  let targetTime = null;
+  let rafId = 0;
+
+  const state = {
+    checkpointIndex: 0,
+    targetIndex: null,
+    checkpointCount: 1,
+    currentTime: 0,
+    mode: 'loading'
+  };
+  window.__flashsketchDeckState = state;
+
+  function publish(mode) {
+    state.checkpointIndex = currentIndex;
+    state.targetIndex = targetIndex;
+    state.checkpointCount = checkpoints.length;
+    state.currentTime = video.currentTime || 0;
+    state.mode = mode;
+    document.documentElement.dataset.checkpointIndex = String(currentIndex);
+    document.documentElement.dataset.targetIndex = targetIndex === null ? '' : String(targetIndex);
+    document.documentElement.dataset.deckMode = mode;
+  }
+
+  function clampIndex(index) {
+    return Math.max(0, Math.min(checkpoints.length - 1, index));
+  }
+
+  function indexAtOrBefore(time) {
+    let index = 0;
+    const t = Number.isFinite(time) ? time : 0;
+    for (let i = 0; i < checkpoints.length; i += 1) {
+      if (checkpoints[i] <= t + EPSILON_SECONDS) {
+        index = i;
+      } else {
+        break;
+      }
+    }
+    return clampIndex(index);
+  }
+
+  function stopTicker() {
+    if (rafId) {
+      cancelAnimationFrame(rafId);
+      rafId = 0;
+    }
+  }
+
+  function pauseAt(index) {
+    stopTicker();
+    currentIndex = clampIndex(index);
+    targetIndex = null;
+    targetTime = null;
+    video.pause();
+    const time = checkpoints[currentIndex] || 0;
+    if (Math.abs((video.currentTime || 0) - time) > 0.002) {
+      video.currentTime = time;
+    }
+    publish('paused');
+  }
+
+  function ticker() {
+    if (targetTime === null || targetIndex === null) {
+      publish('paused');
+      return;
+    }
+    if (video.ended || video.currentTime >= targetTime - EPSILON_SECONDS) {
+      pauseAt(targetIndex);
+      return;
+    }
+    publish('playing');
+    rafId = requestAnimationFrame(ticker);
+  }
+
+  async function playTo(index) {
+    const nextIndex = clampIndex(index);
+    if (nextIndex === currentIndex) {
+      pauseAt(nextIndex);
+      return;
+    }
+    stopTicker();
+    targetIndex = nextIndex;
+    targetTime = checkpoints[nextIndex] || 0;
+    publish('playing');
+    try {
+      await video.play();
+      ticker();
+    } catch (error) {
+      pauseAt(nextIndex);
+    }
+  }
+
+  function advance() {
+    stopTicker();
+    const fromIndex = indexAtOrBefore(video.currentTime || checkpoints[currentIndex] || 0);
+    currentIndex = fromIndex;
+    const nextIndex = clampIndex(fromIndex + 1);
+    if (nextIndex === fromIndex) {
+      pauseAt(fromIndex);
+      return;
+    }
+    const startTime = checkpoints[fromIndex] || 0;
+    const nextTime = checkpoints[nextIndex] || startTime;
+    if (video.currentTime < startTime - EPSILON_SECONDS || video.currentTime >= nextTime - EPSILON_SECONDS) {
+      video.currentTime = startTime;
+    }
+    playTo(nextIndex);
+  }
+
+  function retreat() {
+    stopTicker();
+    const fromIndex = indexAtOrBefore(video.currentTime || checkpoints[currentIndex] || 0);
+    pauseAt(clampIndex(fromIndex - 1));
+  }
+
+  function handleKeydown(event) {
+    if (event.altKey || event.ctrlKey || event.metaKey) {
+      return;
+    }
+    if (event.key === 'ArrowRight' || event.key === ' ' || event.key === 'PageDown') {
+      event.preventDefault();
+      advance();
+      return;
+    }
+    if (event.key === 'ArrowLeft' || event.key === 'PageUp') {
+      event.preventDefault();
+      retreat();
+    }
+  }
+
+  window.addEventListener('keydown', handleKeydown);
+  video.addEventListener('loadedmetadata', () => pauseAt(0), { once: true });
+  video.addEventListener('ended', () => pauseAt(checkpoints.length - 1));
+
+  fetch('manifest.json')
+    .then(response => {
+      if (!response.ok) {
+        throw new Error(`manifest ${response.status}`);
+      }
+      return response.json();
+    })
+    .then(manifest => {
+      const loaded = (manifest.checkpoints || [])
+        .map(checkpoint => Number(checkpoint.time_seconds))
+        .filter(time => Number.isFinite(time) && time >= 0);
+      if (loaded.length > 0) {
+        checkpoints = loaded;
+      }
+      pauseAt(0);
+    })
+    .catch(() => {
+      pauseAt(0);
+    });
+});
+</script>
+</head>
+<body>
+<video id="deck" src="deck.mp4" preload="auto" playsinline></video>
+</body>
+</html>
