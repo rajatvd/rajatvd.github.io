@@ -1,0 +1,1776 @@
+<!doctype html>
+<html lang="en">
+<head>
+<meta charset="utf-8">
+<meta name="viewport" content="width=device-width, initial-scale=1">
+<title>FlashSketch</title>
+<style>
+html,
+body {
+  width: 100%;
+  height: 100%;
+  margin: 0;
+  overflow: hidden;
+  background: #f6f3ea;
+}
+body:focus,
+video:focus {
+  outline: none;
+}
+video {
+  display: block;
+  width: 100vw;
+  height: 100vh;
+  margin: 0;
+  background: #f6f3ea;
+  object-fit: contain;
+}
+</style>
+<script>
+(() => {
+  'use strict';
+
+  const CHECKPOINTS = [
+    {
+      "index": 0,
+      "time": 0.0,
+      "label": "start"
+    },
+    {
+      "index": 1,
+      "time": 38.533334,
+      "label": "title_loop_complete"
+    },
+    {
+      "index": 2,
+      "time": 39.265378,
+      "label": "title_blank"
+    },
+    {
+      "index": 3,
+      "time": 39.398334,
+      "label": "contributions_title_hold"
+    },
+    {
+      "index": 4,
+      "time": 40.565001,
+      "label": "cv_wall_full"
+    },
+    {
+      "index": 5,
+      "time": 41.864687,
+      "label": "left_column_focus_hold"
+    },
+    {
+      "index": 6,
+      "time": 43.164365,
+      "label": "phase_optimization_hold"
+    },
+    {
+      "index": 7,
+      "time": 44.464043,
+      "label": "phase_optimization_wall_return_hold"
+    },
+    {
+      "index": 8,
+      "time": 45.763721,
+      "label": "phase_probabilistic_hardware_hold"
+    },
+    {
+      "index": 9,
+      "time": 47.063399,
+      "label": "phase_probabilistic_hardware_wall_return_hold"
+    },
+    {
+      "index": 10,
+      "time": 48.363077,
+      "label": "phase_flashsketch_contributions_hold"
+    },
+    {
+      "index": 11,
+      "time": 49.662755,
+      "label": "phase_flashsketch_talk_outline_hold"
+    },
+    {
+      "index": 12,
+      "time": 50.962433,
+      "label": "blank_out_complete"
+    },
+    {
+      "index": 13,
+      "time": 52.028435,
+      "label": "randnla_title_only_hold"
+    },
+    {
+      "index": 14,
+      "time": 52.161425,
+      "label": "title_corner_ready"
+    },
+    {
+      "index": 15,
+      "time": 52.994758,
+      "label": "opening_equation_ready"
+    },
+    {
+      "index": 16,
+      "time": 53.960769,
+      "label": "prematrix_motivation_line_1_ready"
+    },
+    {
+      "index": 17,
+      "time": 54.926769,
+      "label": "prematrix_motivation_line_2_ready"
+    },
+    {
+      "index": 18,
+      "time": 55.892769,
+      "label": "prematrix_motivation_line_3_ready"
+    },
+    {
+      "index": 19,
+      "time": 56.858769,
+      "label": "prematrix_motivation_ready"
+    },
+    {
+      "index": 20,
+      "time": 57.824769,
+      "label": "opening_grids_ready"
+    },
+    {
+      "index": 21,
+      "time": 58.090798,
+      "label": "wide_system_ready"
+    },
+    {
+      "index": 22,
+      "time": 59.056769,
+      "label": "final_tall_system_ready"
+    },
+    {
+      "index": 23,
+      "time": 60.422766,
+      "label": "tall_dimensions_ready"
+    },
+    {
+      "index": 24,
+      "time": 61.788766,
+      "label": "least_squares_residual_ready"
+    },
+    {
+      "index": 25,
+      "time": 62.754769,
+      "label": "least_squares_ready"
+    },
+    {
+      "index": 26,
+      "time": 63.720769,
+      "label": "sketch_components_ready"
+    },
+    {
+      "index": 27,
+      "time": 64.353775,
+      "label": "sketched_residual_ready"
+    },
+    {
+      "index": 28,
+      "time": 65.719766,
+      "label": "combined_sketch_ready"
+    },
+    {
+      "index": 29,
+      "time": 66.685769,
+      "label": "least_squares_solution_formulas_ready"
+    },
+    {
+      "index": 30,
+      "time": 68.051766,
+      "label": "sketch_least_squares_left_plot_ready"
+    },
+    {
+      "index": 31,
+      "time": 69.017769,
+      "label": "sketch_least_squares_plots_ready"
+    },
+    {
+      "index": 32,
+      "time": 69.983769,
+      "label": "applications_classical_ready"
+    },
+    {
+      "index": 33,
+      "time": 70.949769,
+      "label": "applications_ready"
+    },
+    {
+      "index": 34,
+      "time": 71.915769,
+      "label": "final_title_ready"
+    },
+    {
+      "index": 35,
+      "time": 72.881769,
+      "label": "final_nla_bar_hold"
+    },
+    {
+      "index": 36,
+      "time": 73.847769,
+      "label": "randnla_empty_handoff_hold"
+    },
+    {
+      "index": 37,
+      "time": 75.147444,
+      "label": "jl_randnla_question_hold"
+    },
+    {
+      "index": 38,
+      "time": 76.113447,
+      "label": "title_only_hold"
+    },
+    {
+      "index": 39,
+      "time": 76.246436,
+      "label": "title_corner_hold"
+    },
+    {
+      "index": 40,
+      "time": 77.179137,
+      "label": "title_compressed_hold"
+    },
+    {
+      "index": 41,
+      "time": 78.711135,
+      "label": "title_for_subspaces_hold"
+    },
+    {
+      "index": 42,
+      "time": 80.0108,
+      "label": "known_notation_visible"
+    },
+    {
+      "index": 43,
+      "time": 81.310478,
+      "label": "factorization_equations_visible"
+    },
+    {
+      "index": 44,
+      "time": 82.610156,
+      "label": "source_grid_visible"
+    },
+    {
+      "index": 45,
+      "time": 83.676158,
+      "label": "subspace_cloud_visible"
+    },
+    {
+      "index": 46,
+      "time": 85.209155,
+      "label": "sketch_right_plane_visible"
+    },
+    {
+      "index": 47,
+      "time": 86.275158,
+      "label": "bottom_copy_visible"
+    },
+    {
+      "index": 48,
+      "time": 87.974832,
+      "label": "norm_statement_visible"
+    },
+    {
+      "index": 49,
+      "time": 89.67451,
+      "label": "dimension_result_visible"
+    },
+    {
+      "index": 50,
+      "time": 90.740223,
+      "label": "embedding_dimension_takeaway"
+    },
+    {
+      "index": 51,
+      "time": 91.805912,
+      "label": "subspace_theory_left_column_visible"
+    },
+    {
+      "index": 52,
+      "time": 92.871892,
+      "label": "epsilon_intuition_hold"
+    },
+    {
+      "index": 53,
+      "time": 94.171568,
+      "label": "epsilon_k_plot_hold"
+    },
+    {
+      "index": 54,
+      "time": 95.471246,
+      "label": "matrix_transform_return_hold"
+    },
+    {
+      "index": 55,
+      "time": 96.537248,
+      "label": "graph_context_nodes_hold"
+    },
+    {
+      "index": 56,
+      "time": 97.836924,
+      "label": "s_row_edges_hold"
+    },
+    {
+      "index": 57,
+      "time": 99.136602,
+      "label": "s_column_edges_hold"
+    },
+    {
+      "index": 58,
+      "time": 100.43628,
+      "label": "full_dense_edges_hold"
+    },
+    {
+      "index": 59,
+      "time": 101.735958,
+      "label": "blank_start_hold"
+    },
+    {
+      "index": 60,
+      "time": 103.035636,
+      "label": "title_only_hold"
+    },
+    {
+      "index": 61,
+      "time": 104.335314,
+      "label": "dense_context_hold"
+    },
+    {
+      "index": 62,
+      "time": 104.935002,
+      "label": "s_matrix_sparsified_hold"
+    },
+    {
+      "index": 63,
+      "time": 105.401651,
+      "label": "sparse_graph_hold"
+    },
+    {
+      "index": 64,
+      "time": 106.701337,
+      "label": "sjlt_definition_full_hold"
+    },
+    {
+      "index": 65,
+      "time": 108.001015,
+      "label": "sjlt_definition_abbrev_hold"
+    },
+    {
+      "index": 66,
+      "time": 109.300693,
+      "label": "sparse_jl_guarantee_hold"
+    },
+    {
+      "index": 67,
+      "time": 110.266407,
+      "label": "sparse_threshold_condition_hold"
+    },
+    {
+      "index": 68,
+      "time": 111.56606,
+      "label": "sparse_threshold_definition_hold"
+    },
+    {
+      "index": 69,
+      "time": 112.865738,
+      "label": "sparse_threshold_explained_hold"
+    },
+    {
+      "index": 70,
+      "time": 114.165416,
+      "label": "guarantee_compact_graph_restored_hold"
+    },
+    {
+      "index": 71,
+      "time": 115.465094,
+      "label": "column_sparsity_hold"
+    },
+    {
+      "index": 72,
+      "time": 116.764772,
+      "label": "column_sweep_hold"
+    },
+    {
+      "index": 73,
+      "time": 118.06445,
+      "label": "blank_end_hold"
+    },
+    {
+      "index": 74,
+      "time": 119.364128,
+      "label": "opening_title_ready"
+    },
+    {
+      "index": 75,
+      "time": 120.663806,
+      "label": "title_base_ready"
+    },
+    {
+      "index": 76,
+      "time": 128.261805,
+      "label": "dense_product_ready"
+    },
+    {
+      "index": 77,
+      "time": 129.561484,
+      "label": "dense_flops_ready"
+    },
+    {
+      "index": 78,
+      "time": 129.694476,
+      "label": "sparse_product_ready"
+    },
+    {
+      "index": 79,
+      "time": 130.394476,
+      "label": "sparse_flops_ready"
+    },
+    {
+      "index": 80,
+      "time": 131.227489,
+      "label": "confidence_line_ready"
+    },
+    {
+      "index": 81,
+      "time": 132.060489,
+      "label": "title_gpu_ready"
+    },
+    {
+      "index": 82,
+      "time": 132.893489,
+      "label": "confidence_question_ready"
+    },
+    {
+      "index": 83,
+      "time": 133.726489,
+      "label": "cusparse_hero_ready"
+    },
+    {
+      "index": 84,
+      "time": 134.559489,
+      "label": "density_axis_ready"
+    },
+    {
+      "index": 85,
+      "time": 135.392489,
+      "label": "cusparse_explainer_ready"
+    },
+    {
+      "index": 86,
+      "time": 136.225489,
+      "label": "cusparse_values_ready"
+    },
+    {
+      "index": 87,
+      "time": 137.058489,
+      "label": "cublas_explainer_body_ready"
+    },
+    {
+      "index": 88,
+      "time": 138.391484,
+      "label": "cublas_header_ready"
+    },
+    {
+      "index": 89,
+      "time": 139.291166,
+      "label": "cublas_values_ready"
+    },
+    {
+      "index": 90,
+      "time": 140.124167,
+      "label": "faster_highlights_ready"
+    },
+    {
+      "index": 91,
+      "time": 142.123837,
+      "label": "thesis_hold"
+    },
+    {
+      "index": 92,
+      "time": 142.956845,
+      "label": "memory_bridge_title_only_ready"
+    },
+    {
+      "index": 93,
+      "time": 143.989842,
+      "label": "memory_bridge_top_line_ready"
+    },
+    {
+      "index": 94,
+      "time": 145.989515,
+      "label": "memory_bridge_diagram_ready"
+    },
+    {
+      "index": 95,
+      "time": 146.922521,
+      "label": "input_arrived_at_computation_ready"
+    },
+    {
+      "index": 96,
+      "time": 147.755523,
+      "label": "computation_output_cluster_ready"
+    },
+    {
+      "index": 97,
+      "time": 148.555201,
+      "label": "data_movement_takes_time_hold"
+    },
+    {
+      "index": 98,
+      "time": 149.388201,
+      "label": "blank_final"
+    },
+    {
+      "index": 99,
+      "time": 150.287212,
+      "label": "rtx4090_full_chip_hold"
+    },
+    {
+      "index": 100,
+      "time": 152.386871,
+      "label": "rtx4090_gmem_die_highlight_hold"
+    },
+    {
+      "index": 101,
+      "time": 153.186557,
+      "label": "gpu_scratch_explain_gmem_hold"
+    },
+    {
+      "index": 102,
+      "time": 163.686223,
+      "label": "gpu_scratch_gmem_grid_ready"
+    },
+    {
+      "index": 103,
+      "time": 165.485234,
+      "label": "gpu_scratch_bus_chip_crops_undimmed"
+    },
+    {
+      "index": 104,
+      "time": 165.618222,
+      "label": "gpu_scratch_bare_gpu_grammar_ready"
+    },
+    {
+      "index": 105,
+      "time": 166.851555,
+      "label": "gpu_scratch_raw_gpu_grammar_hold"
+    },
+    {
+      "index": 106,
+      "time": 169.517559,
+      "label": "gpu_scratch_explain_bus_hold"
+    },
+    {
+      "index": 107,
+      "time": 171.216574,
+      "label": "gpu_scratch_explain_sms_hold"
+    },
+    {
+      "index": 108,
+      "time": 173.016239,
+      "label": "gpu_scratch_explain_shared_memory_hold"
+    },
+    {
+      "index": 109,
+      "time": 173.848272,
+      "label": "gpu_scratch_explain_registers_hold"
+    },
+    {
+      "index": 110,
+      "time": 175.813938,
+      "label": "gpu_scratch_explain_register_compute_hold"
+    },
+    {
+      "index": 111,
+      "time": 176.646935,
+      "label": "gpu_scratch_explain_thread_status_hold"
+    },
+    {
+      "index": 112,
+      "time": 177.679932,
+      "label": "gpu_scratch_data_path_clean_start_ready"
+    },
+    {
+      "index": 113,
+      "time": 178.711953,
+      "label": "gpu_scratch_data_path_gmem_to_smem_hold"
+    },
+    {
+      "index": 114,
+      "time": 179.743953,
+      "label": "gpu_scratch_data_path_smem_to_rmem_hold"
+    },
+    {
+      "index": 115,
+      "time": 180.776932,
+      "label": "gpu_scratch_data_path_compute_zoomed_in_ready"
+    },
+    {
+      "index": 116,
+      "time": 181.809932,
+      "label": "gpu_scratch_data_path_compute_hold"
+    },
+    {
+      "index": 117,
+      "time": 182.841953,
+      "label": "gpu_scratch_data_path_compute_zoomed_out_ready"
+    },
+    {
+      "index": 118,
+      "time": 183.674935,
+      "label": "gpu_scratch_data_path_rmem_to_smem_hold"
+    },
+    {
+      "index": 119,
+      "time": 184.90793,
+      "label": "gpu_scratch_data_path_smem_to_gmem_hold"
+    },
+    {
+      "index": 120,
+      "time": 186.040931,
+      "label": "gpu_scratch_data_path_microsequence_reset_complete"
+    },
+    {
+      "index": 121,
+      "time": 187.106932,
+      "label": "gpu_scratch_bare_gpu_grammar_ready"
+    },
+    {
+      "index": 122,
+      "time": 188.272931,
+      "label": "gpu_scratch_wiring_ready"
+    },
+    {
+      "index": 123,
+      "time": 189.338932,
+      "label": "gpu_scratch_individual_transfers_complete"
+    },
+    {
+      "index": 124,
+      "time": 190.471931,
+      "label": "gpu_scratch_empty_handoff_hold"
+    },
+    {
+      "index": 125,
+      "time": 191.70493,
+      "label": "sjlt_title_intro_hold"
+    },
+    {
+      "index": 126,
+      "time": 192.570934,
+      "label": "sjlt_sparse_graph_setup_hold"
+    },
+    {
+      "index": 127,
+      "time": 192.703922,
+      "label": "sjlt_thread_mapping_row_highlights_hold"
+    },
+    {
+      "index": 128,
+      "time": 192.836922,
+      "label": "sjlt_thread_mapping_focus_sm_hold"
+    },
+    {
+      "index": 129,
+      "time": 194.502928,
+      "label": "sjlt_thread_mapping_a_entry_staged_hold"
+    },
+    {
+      "index": 130,
+      "time": 233.2356,
+      "label": "sjlt_thread_mapping_first_y_read_hold"
+    },
+    {
+      "index": 131,
+      "time": 234.26861,
+      "label": "sjlt_thread_mapping_first_y_modify_hold"
+    },
+    {
+      "index": 132,
+      "time": 234.4016,
+      "label": "sjlt_thread_mapping_first_y_updated_hold"
+    },
+    {
+      "index": 133,
+      "time": 235.334301,
+      "label": "sjlt_thread_mapping_first_y_writeback_hold"
+    },
+    {
+      "index": 134,
+      "time": 236.399997,
+      "label": "sjlt_thread_mapping_second_y_read_hold"
+    },
+    {
+      "index": 135,
+      "time": 237.699653,
+      "label": "sjlt_thread_mapping_second_y_modify_hold"
+    },
+    {
+      "index": 136,
+      "time": 239.365651,
+      "label": "sjlt_thread_mapping_second_y_updated_hold"
+    },
+    {
+      "index": 137,
+      "time": 240.898652,
+      "label": "sjlt_thread_mapping_second_y_writeback_hold"
+    },
+    {
+      "index": 138,
+      "time": 242.464652,
+      "label": "sjlt_thread_mapping_duplicate_y_a_entries_staged_hold"
+    },
+    {
+      "index": 139,
+      "time": 243.997652,
+      "label": "sjlt_thread_mapping_duplicate_y_ownership_conflict_hold"
+    },
+    {
+      "index": 140,
+      "time": 245.230653,
+      "label": "sjlt_thread_mapping_duplicate_y_wrongness_hold"
+    },
+    {
+      "index": 141,
+      "time": 246.796652,
+      "label": "sjlt_thread_mapping_atomic_first_y_load_hold"
+    },
+    {
+      "index": 142,
+      "time": 248.362652,
+      "label": "sjlt_thread_mapping_atomic_first_y_add_hold"
+    },
+    {
+      "index": 143,
+      "time": 249.895652,
+      "label": "sjlt_thread_mapping_atomic_first_y_writeback_hold"
+    },
+    {
+      "index": 144,
+      "time": 251.128653,
+      "label": "sjlt_thread_mapping_atomic_second_y_load_hold"
+    },
+    {
+      "index": 145,
+      "time": 252.694652,
+      "label": "sjlt_thread_mapping_atomic_second_y_add_hold"
+    },
+    {
+      "index": 146,
+      "time": 254.060653,
+      "label": "sjlt_thread_mapping_atomic_second_y_writeback_hold"
+    },
+    {
+      "index": 147,
+      "time": 256.593649,
+      "label": "blank_end_hold"
+    },
+    {
+      "index": 148,
+      "time": 258.926649,
+      "label": "sjlt_gpu_morph_placeholder_hold"
+    },
+    {
+      "index": 149,
+      "time": 261.959648,
+      "label": "sjlt_gpu_operand_panels_ready_hold"
+    },
+    {
+      "index": 150,
+      "time": 264.992648,
+      "label": "sjlt_kernel_run_placeholder_hold"
+    },
+    {
+      "index": 151,
+      "time": 267.425649,
+      "label": "sjlt_global_atomic_contention_labeled_hold"
+    },
+    {
+      "index": 152,
+      "time": 269.858649,
+      "label": "sjlt_global_atomic_holder_after_read"
+    },
+    {
+      "index": 153,
+      "time": 272.891648,
+      "label": "sjlt_global_atomic_holder_after_compute"
+    },
+    {
+      "index": 154,
+      "time": 275.324649,
+      "label": "sjlt_global_atomic_holder_after_write"
+    },
+    {
+      "index": 155,
+      "time": 276.390655,
+      "label": "sjlt_global_atomic_lock_released_hold"
+    },
+    {
+      "index": 156,
+      "time": 276.523645,
+      "label": "sjlt_global_atomic_waiter_after_read"
+    },
+    {
+      "index": 157,
+      "time": 278.189645,
+      "label": "sjlt_global_atomic_waiter_after_compute"
+    },
+    {
+      "index": 158,
+      "time": 279.722652,
+      "label": "sjlt_global_atomic_waiter_after_write"
+    },
+    {
+      "index": 159,
+      "time": 290.988646,
+      "label": "sjlt_global_atomic_pre_rejoin_undim_speedup"
+    },
+    {
+      "index": 160,
+      "time": 292.421338,
+      "label": "sjlt_nonlocal_computation_hold"
+    },
+    {
+      "index": 161,
+      "time": 298.521002,
+      "label": "sjlt_final_statement_cleanup_hold"
+    },
+    {
+      "index": 162,
+      "time": 299.320692,
+      "label": "sjlt_tension_statement_hold"
+    },
+    {
+      "index": 163,
+      "time": 305.58668,
+      "label": "sjlt_resolution_statement_hold"
+    },
+    {
+      "index": 164,
+      "time": 306.652398,
+      "label": "sjlt_tension_resolution_hero_hold"
+    },
+    {
+      "index": 165,
+      "time": 312.518369,
+      "label": "sjlt_empty_handoff_hold"
+    },
+    {
+      "index": 166,
+      "time": 313.318059,
+      "label": "balancing_the_tension_hold"
+    },
+    {
+      "index": 167,
+      "time": 319.584047,
+      "label": "ordinary_substrate_hold"
+    },
+    {
+      "index": 168,
+      "time": 320.250062,
+      "label": "pre_cross_sm_global_atomic_hold"
+    },
+    {
+      "index": 169,
+      "time": 329.581762,
+      "label": "cross_sm_global_atomic_hold"
+    },
+    {
+      "index": 170,
+      "time": 330.647476,
+      "label": "ordinary_restored_nonlocal_label_hold"
+    },
+    {
+      "index": 171,
+      "time": 335.413448,
+      "label": "identity_local_structure_hold"
+    },
+    {
+      "index": 172,
+      "time": 339.713126,
+      "label": "identity_local_focus_hold"
+    },
+    {
+      "index": 173,
+      "time": 340.779134,
+      "label": "localized_shared_memory_atomic_hold"
+    },
+    {
+      "index": 174,
+      "time": 341.511168,
+      "label": "pre_constrained_randomness_hold"
+    },
+    {
+      "index": 175,
+      "time": 341.644124,
+      "label": "identity_block_map_hold"
+    },
+    {
+      "index": 176,
+      "time": 342.477457,
+      "label": "identity_block_map_block2_dim_hold"
+    },
+    {
+      "index": 177,
+      "time": 343.443468,
+      "label": "block_focus_constrained_randomness_hold"
+    },
+    {
+      "index": 178,
+      "time": 344.876464,
+      "label": "identity_block_map_block2_undim_hold"
+    },
+    {
+      "index": 179,
+      "time": 345.842468,
+      "label": "pi0_block_permutation_hold"
+    },
+    {
+      "index": 180,
+      "time": 346.808468,
+      "label": "blockperm_union_construction_hold"
+    },
+    {
+      "index": 181,
+      "time": 348.241464,
+      "label": "blockperm_union_label_reveal_hold"
+    },
+    {
+      "index": 182,
+      "time": 349.207468,
+      "label": "blockperm_center_title_hold"
+    },
+    {
+      "index": 183,
+      "time": 351.10714,
+      "label": "blockperm_corner_title_hold"
+    },
+    {
+      "index": 184,
+      "time": 360.240136,
+      "label": "blockperm_structure_hold"
+    },
+    {
+      "index": 185,
+      "time": 361.206146,
+      "label": "output_block_neighborhood_hold"
+    },
+    {
+      "index": 186,
+      "time": 362.172146,
+      "label": "input_block_destinations_hold"
+    },
+    {
+      "index": 187,
+      "time": 362.905149,
+      "label": "kappa_single_permutation_hold"
+    },
+    {
+      "index": 188,
+      "time": 363.871146,
+      "label": "kappa_four_permutation_hold"
+    },
+    {
+      "index": 189,
+      "time": 364.837146,
+      "label": "kappa_two_return_poster_hold"
+    },
+    {
+      "index": 190,
+      "time": 366.269157,
+      "label": "hardware_informed_randomness_hero_hold"
+    },
+    {
+      "index": 191,
+      "time": 366.535175,
+      "label": "blockperm_empty_handoff_hold"
+    },
+    {
+      "index": 192,
+      "time": 367.501146,
+      "label": "flashsketch_title_hold"
+    },
+    {
+      "index": 193,
+      "time": 368.467146,
+      "label": "flashsketch_blank_gpu_grammar_loaded"
+    },
+    {
+      "index": 194,
+      "time": 369.433146,
+      "label": "flashsketch_gmem_matrices_loaded"
+    },
+    {
+      "index": 195,
+      "time": 370.399146,
+      "label": "flashsketch_full_s_loaded_pre_generated_annotation"
+    },
+    {
+      "index": 196,
+      "time": 371.365146,
+      "label": "flashsketch_full_s_loaded"
+    },
+    {
+      "index": 197,
+      "time": 372.331146,
+      "label": "gpu_scratch_wiring_ready"
+    },
+    {
+      "index": 198,
+      "time": 373.297146,
+      "label": "gpu_scratch_shared_memory_atomic_pre_waiting_annotation"
+    },
+    {
+      "index": 199,
+      "time": 374.263146,
+      "label": "gpu_scratch_shared_memory_atomic_waiting_annotated"
+    },
+    {
+      "index": 200,
+      "time": 378.396137,
+      "label": "gpu_scratch_shared_memory_atomic_contention_labeled"
+    },
+    {
+      "index": 201,
+      "time": 379.362146,
+      "label": "gpu_scratch_shared_memory_atomic_holder_after_read"
+    },
+    {
+      "index": 202,
+      "time": 379.495135,
+      "label": "gpu_scratch_shared_memory_atomic_holder_after_compute"
+    },
+    {
+      "index": 203,
+      "time": 380.428468,
+      "label": "gpu_scratch_shared_memory_atomic_holder_after_write"
+    },
+    {
+      "index": 204,
+      "time": 381.961475,
+      "label": "gpu_scratch_shared_memory_atomic_lock_released"
+    },
+    {
+      "index": 205,
+      "time": 383.294476,
+      "label": "gpu_scratch_shared_memory_atomic_waiter_after_read"
+    },
+    {
+      "index": 206,
+      "time": 384.427477,
+      "label": "gpu_scratch_shared_memory_atomic_waiter_after_compute"
+    },
+    {
+      "index": 207,
+      "time": 385.260481,
+      "label": "gpu_scratch_shared_memory_atomic_waiter_after_write"
+    },
+    {
+      "index": 208,
+      "time": 386.626476,
+      "label": "gpu_scratch_shared_memory_atomic_pre_rejoin_undim_zoomout_speedup"
+    },
+    {
+      "index": 209,
+      "time": 399.159147,
+      "label": "blank_end_hold"
+    },
+    {
+      "index": 210,
+      "time": 399.792163,
+      "label": "title_intro_ready"
+    },
+    {
+      "index": 211,
+      "time": 400.425163,
+      "label": "title_corner_ready"
+    },
+    {
+      "index": 212,
+      "time": 402.524829,
+      "label": "speed_metric_ready"
+    },
+    {
+      "index": 213,
+      "time": 403.290838,
+      "label": "quality_depends_ready"
+    },
+    {
+      "index": 214,
+      "time": 405.590506,
+      "label": "geometry_formula_ready"
+    },
+    {
+      "index": 215,
+      "time": 406.323516,
+      "label": "task_error_examples_ready"
+    },
+    {
+      "index": 216,
+      "time": 408.589506,
+      "label": "gram_context_randnla_ready"
+    },
+    {
+      "index": 217,
+      "time": 409.355516,
+      "label": "gram_context_plot_title_ready"
+    },
+    {
+      "index": 218,
+      "time": 411.655184,
+      "label": "gram_context_metric_ready"
+    },
+    {
+      "index": 219,
+      "time": 412.788189,
+      "label": "gram_context_locations_ready"
+    },
+    {
+      "index": 220,
+      "time": 417.654182,
+      "label": "pareto_frontier_empty_ready"
+    },
+    {
+      "index": 221,
+      "time": 417.78718,
+      "label": "pareto_intro_text_ready"
+    },
+    {
+      "index": 222,
+      "time": 418.719881,
+      "label": "pareto_intro_arrow_ready"
+    },
+    {
+      "index": 223,
+      "time": 420.019544,
+      "label": "pareto_intro_clear_ready"
+    },
+    {
+      "index": 224,
+      "time": 421.085255,
+      "label": "gram_dataset_detail_ready"
+    },
+    {
+      "index": 225,
+      "time": 422.150944,
+      "label": "dense_gaussian_tradeoff_ready"
+    },
+    {
+      "index": 226,
+      "time": 423.216924,
+      "label": "baselines_ready"
+    },
+    {
+      "index": 227,
+      "time": 424.282924,
+      "label": "flashsketch_hero_pareto_mog_hold"
+    },
+    {
+      "index": 228,
+      "time": 425.348633,
+      "label": "speedup_arrow_ready"
+    },
+    {
+      "index": 229,
+      "time": 426.414322,
+      "label": "randnla_sketch_ridge_ready"
+    },
+    {
+      "index": 230,
+      "time": 427.480302,
+      "label": "grass_explanation_intro_ready"
+    },
+    {
+      "index": 231,
+      "time": 428.779978,
+      "label": "grass_explanation_1"
+    },
+    {
+      "index": 232,
+      "time": 429.845689,
+      "label": "grass_explanation_2"
+    },
+    {
+      "index": 233,
+      "time": 430.911669,
+      "label": "grass_explanation_structure_ready"
+    },
+    {
+      "index": 234,
+      "time": 432.177667,
+      "label": "grass_explanation_metric_ready"
+    },
+    {
+      "index": 235,
+      "time": 433.243669,
+      "label": "grass_explanation_higher_ready"
+    },
+    {
+      "index": 236,
+      "time": 434.309669,
+      "label": "grass_downstream_metric_ready"
+    },
+    {
+      "index": 237,
+      "time": 435.575667,
+      "label": "flashsketch_dominance_plot_ready"
+    },
+    {
+      "index": 238,
+      "time": 437.175343,
+      "label": "takeaway_title_centered_ready"
+    },
+    {
+      "index": 239,
+      "time": 438.475023,
+      "label": "takeaway_speedup_quality_ready"
+    },
+    {
+      "index": 240,
+      "time": 439.541025,
+      "label": "takeaway_pareto_frontier_ready"
+    },
+    {
+      "index": 241,
+      "time": 440.606734,
+      "label": "empirical_takeaway_hold"
+    },
+    {
+      "index": 242,
+      "time": 441.672423,
+      "label": "empirical_empty_handoff_hold"
+    },
+    {
+      "index": 243,
+      "time": 442.738403,
+      "label": "centered_title_hold"
+    },
+    {
+      "index": 244,
+      "time": 443.804403,
+      "label": "theory_fresh_layout_hold"
+    },
+    {
+      "index": 245,
+      "time": 444.870112,
+      "label": "range_basis_u_hold"
+    },
+    {
+      "index": 246,
+      "time": 445.935801,
+      "label": "formal_definition_hold"
+    },
+    {
+      "index": 247,
+      "time": 447.001781,
+      "label": "permutations_hold"
+    },
+    {
+      "index": 248,
+      "time": 448.301457,
+      "label": "formal_m_definition_hold"
+    },
+    {
+      "index": 249,
+      "time": 449.601135,
+      "label": "neighborhood_definition_hold"
+    },
+    {
+      "index": 250,
+      "time": 450.900813,
+      "label": "neighborhood_example_hold"
+    },
+    {
+      "index": 251,
+      "time": 451.966524,
+      "label": "neighborhood_stack_explanation_hold"
+    },
+    {
+      "index": 252,
+      "time": 453.032504,
+      "label": "formal_top_right_panel_hold"
+    },
+    {
+      "index": 253,
+      "time": 453.665511,
+      "label": "neighborhood_row_0_bar_hold"
+    },
+    {
+      "index": 254,
+      "time": 454.398508,
+      "label": "neighborhood_row_1_bar_hold"
+    },
+    {
+      "index": 255,
+      "time": 454.531494,
+      "label": "neighborhood_row_2_bar_hold"
+    },
+    {
+      "index": 256,
+      "time": 455.464827,
+      "label": "neighborhood_row_3_bar_hold"
+    },
+    {
+      "index": 257,
+      "time": 456.530546,
+      "label": "neighborhood_row_4_bar_hold"
+    },
+    {
+      "index": 258,
+      "time": 457.830202,
+      "label": "pre_max_collapse_hold"
+    },
+    {
+      "index": 259,
+      "time": 458.895913,
+      "label": "neighborhood_coherence_max_hold"
+    },
+    {
+      "index": 260,
+      "time": 459.961893,
+      "label": "block_coherence_definition_hold"
+    },
+    {
+      "index": 261,
+      "time": 461.027893,
+      "label": "block_coherence_bound_nbr_le_blk_hold"
+    },
+    {
+      "index": 262,
+      "time": 462.093893,
+      "label": "block_coherence_bound_blk_range_hold"
+    },
+    {
+      "index": 263,
+      "time": 463.159893,
+      "label": "block_coherence_bound_nbr_range_hold"
+    },
+    {
+      "index": 264,
+      "time": 464.225893,
+      "label": "coherence_definition_header_hold"
+    },
+    {
+      "index": 265,
+      "time": 465.525569,
+      "label": "fixed_permutation_theorem_heading_hold"
+    },
+    {
+      "index": 266,
+      "time": 468.258565,
+      "label": "fixed_permutation_distortion_hold"
+    },
+    {
+      "index": 267,
+      "time": 471.024565,
+      "label": "fixed_permutation_thresholds_hold"
+    },
+    {
+      "index": 268,
+      "time": 473.790565,
+      "label": "fixed_permutations_line_hold"
+    },
+    {
+      "index": 269,
+      "time": 476.556565,
+      "label": "fixed_permutation_theorem_left_hold"
+    },
+    {
+      "index": 270,
+      "time": 479.322565,
+      "label": "random_smoothing_distribution_hold"
+    },
+    {
+      "index": 271,
+      "time": 480.388571,
+      "label": "random_smoothing_theorem_hold"
+    },
+    {
+      "index": 272,
+      "time": 482.388244,
+      "label": "random_smoothing_proof_heading_hold"
+    },
+    {
+      "index": 273,
+      "time": 483.453958,
+      "label": "random_smoothing_sketch_wave_hold"
+    },
+    {
+      "index": 274,
+      "time": 484.519938,
+      "label": "random_smoothing_proof_step_one_hold"
+    },
+    {
+      "index": 275,
+      "time": 485.585938,
+      "label": "random_smoothing_proof_step_two_hold"
+    },
+    {
+      "index": 276,
+      "time": 486.651938,
+      "label": "random_smoothing_proof_step_three_hold"
+    },
+    {
+      "index": 277,
+      "time": 487.951614,
+      "label": "random_smoothing_proof_hold"
+    },
+    {
+      "index": 278,
+      "time": 489.017616,
+      "label": "second_half_poster_hold"
+    },
+    {
+      "index": 279,
+      "time": 490.083325,
+      "label": "blank_out_hold"
+    },
+    {
+      "index": 280,
+      "time": 491.149305,
+      "label": "title_center"
+    },
+    {
+      "index": 281,
+      "time": 492.215305,
+      "label": "title_corner"
+    },
+    {
+      "index": 282,
+      "time": 493.514981,
+      "label": "conclusion_line_01"
+    },
+    {
+      "index": 283,
+      "time": 494.580692,
+      "label": "conclusion_line_02"
+    },
+    {
+      "index": 284,
+      "time": 495.646672,
+      "label": "conclusion_line_03"
+    },
+    {
+      "index": 285,
+      "time": 496.712672,
+      "label": "conclusion_line_04"
+    },
+    {
+      "index": 286,
+      "time": 498.012348,
+      "label": "summary_blank_end"
+    },
+    {
+      "index": 287,
+      "time": 499.078059,
+      "label": "token_bonus_blank_start"
+    },
+    {
+      "index": 288,
+      "time": 500.143748,
+      "label": "manim_attribution_hold"
+    },
+    {
+      "index": 289,
+      "time": 501.209728,
+      "label": "token_bonus_final_hold"
+    },
+    {
+      "index": 290,
+      "time": 502.275437,
+      "label": "token_bonus_blank_end"
+    },
+    {
+      "index": 291,
+      "time": 502.875103,
+      "label": "section_290_end"
+    },
+    {
+      "index": 292,
+      "time": 505.441089,
+      "label": "section_291_end"
+    },
+    {
+      "index": 293,
+      "time": 505.574085,
+      "label": "section_292_end"
+    },
+    {
+      "index": 294,
+      "time": 506.173121,
+      "label": "section_293_end"
+    },
+    {
+      "index": 295,
+      "time": 507.139096,
+      "label": "section_294_end"
+    },
+    {
+      "index": 296,
+      "time": 507.871129,
+      "label": "section_295_end"
+    },
+    {
+      "index": 297,
+      "time": 508.603129,
+      "label": "section_296_end"
+    },
+    {
+      "index": 298,
+      "time": 509.335129,
+      "label": "section_297_end"
+    },
+    {
+      "index": 299,
+      "time": 510.067129,
+      "label": "section_298_end"
+    },
+    {
+      "index": 300,
+      "time": 510.800099,
+      "label": "section_299_end"
+    },
+    {
+      "index": 301,
+      "time": 510.933085,
+      "label": "section_300_end"
+    },
+    {
+      "index": 302,
+      "time": 511.066085,
+      "label": "section_301_end"
+    },
+    {
+      "index": 303,
+      "time": 511.798129,
+      "label": "section_302_end"
+    },
+    {
+      "index": 304,
+      "time": 513.463793,
+      "label": "section_303_end"
+    },
+    {
+      "index": 305,
+      "time": 514.196788,
+      "label": "section_304_end"
+    },
+    {
+      "index": 306,
+      "time": 514.329774,
+      "label": "section_305_end"
+    }
+  ];
+  const EPSILON_SECONDS = 0.035;
+  const videoId = 'deck';
+
+  let video = null;
+  let mode = 'loading';
+  let currentIndex = 0;
+  let targetIndex = null;
+  let rafId = 0;
+  let playGeneration = 0;
+
+  const state = {
+    checkpointIndex: 0,
+    targetIndex: null,
+    checkpointCount: CHECKPOINTS.length,
+    currentTime: 0,
+    mode: 'loading'
+  };
+  window.__flashsketchDeckState = state;
+
+  function checkpoint(index) {
+    return CHECKPOINTS[Math.max(0, Math.min(CHECKPOINTS.length - 1, index))];
+  }
+
+  function publish() {
+    state.checkpointIndex = currentIndex;
+    state.targetIndex = targetIndex;
+    state.checkpointCount = CHECKPOINTS.length;
+    state.currentTime = video ? video.currentTime || 0 : 0;
+    state.mode = mode;
+    document.documentElement.dataset.checkpointIndex = String(currentIndex);
+    document.documentElement.dataset.targetIndex = targetIndex === null ? '' : String(targetIndex);
+    document.documentElement.dataset.deckMode = mode;
+  }
+
+  function stopTicker() {
+    if (rafId) {
+      cancelAnimationFrame(rafId);
+      rafId = 0;
+    }
+  }
+
+  function seekExact(seconds) {
+    if (video) {
+      video.currentTime = Number.isFinite(seconds) ? seconds : 0;
+    }
+  }
+
+  function pauseAtCheckpoint(index) {
+    const item = checkpoint(index);
+    if (!video || !item) {
+      return;
+    }
+    stopTicker();
+    playGeneration += 1;
+    mode = 'paused';
+    currentIndex = item.index;
+    targetIndex = null;
+    video.pause();
+    seekExact(item.time);
+    publish();
+  }
+
+  function completeIntervalIfReady() {
+    if (!video || mode !== 'playing' || targetIndex === null) {
+      return;
+    }
+    const target = checkpoint(targetIndex);
+    if (!target) {
+      return;
+    }
+    if (video.ended || video.currentTime + EPSILON_SECONDS >= target.time) {
+      pauseAtCheckpoint(targetIndex);
+    }
+  }
+
+  function tick() {
+    rafId = 0;
+    completeIntervalIfReady();
+    if (mode === 'playing') {
+      publish();
+      rafId = requestAnimationFrame(tick);
+    }
+  }
+
+  function playInterval(startIndex, endIndex) {
+    const start = checkpoint(startIndex);
+    const end = checkpoint(endIndex);
+    if (!video || !start || !end) {
+      return;
+    }
+    stopTicker();
+    const generation = playGeneration + 1;
+    playGeneration = generation;
+    mode = 'playing';
+    currentIndex = start.index;
+    targetIndex = end.index;
+    seekExact(start.time);
+    publish();
+    const playPromise = video.play();
+    if (playPromise && typeof playPromise.then === 'function') {
+      playPromise.then(() => {
+        if (generation !== playGeneration) {
+          return;
+        }
+        completeIntervalIfReady();
+        if (mode === 'playing' && !rafId) {
+          rafId = requestAnimationFrame(tick);
+        }
+      }).catch(() => {
+        if (generation === playGeneration) {
+          pauseAtCheckpoint(start.index);
+        }
+      });
+    } else {
+      rafId = requestAnimationFrame(tick);
+    }
+  }
+
+  function actionNext() {
+    if (mode === 'playing') {
+      if (targetIndex === null) {
+        return;
+      }
+      if (targetIndex >= CHECKPOINTS.length - 1) {
+        pauseAtCheckpoint(targetIndex);
+      } else {
+        playInterval(targetIndex, targetIndex + 1);
+      }
+      return;
+    }
+    if (currentIndex >= CHECKPOINTS.length - 1) {
+      return;
+    }
+    playInterval(currentIndex, currentIndex + 1);
+  }
+
+  function actionPrevious() {
+    if (mode === 'playing') {
+      pauseAtCheckpoint(currentIndex);
+      return;
+    }
+    pauseAtCheckpoint(Math.max(0, currentIndex - 1));
+  }
+
+  function actionReplay() {
+    if (mode === 'playing') {
+      if (targetIndex !== null) {
+        playInterval(currentIndex, targetIndex);
+      }
+      return;
+    }
+    if (currentIndex === 0) {
+      if (CHECKPOINTS.length > 1) {
+        playInterval(0, 1);
+      }
+      return;
+    }
+    playInterval(currentIndex - 1, currentIndex);
+  }
+
+  function handleKeydown(event) {
+    if (event.altKey || event.ctrlKey || event.metaKey) {
+      return;
+    }
+    if (event.key === 'ArrowRight' || event.key === ' ' || event.key === 'PageDown') {
+      event.preventDefault();
+      actionNext();
+      return;
+    }
+    if (event.key === 'ArrowLeft' || event.key === 'PageUp') {
+      event.preventDefault();
+      actionPrevious();
+      return;
+    }
+    if (event.key === 'r') {
+      event.preventDefault();
+      actionReplay();
+    }
+  }
+
+  function initialize() {
+    video = document.getElementById(videoId);
+    document.body.tabIndex = -1;
+    document.body.focus({ preventScroll: true });
+    window.addEventListener('keydown', handleKeydown, true);
+    window.addEventListener('blur', publish);
+    video.addEventListener('loadedmetadata', () => pauseAtCheckpoint(0), { once: true });
+    video.addEventListener('ended', () => {
+      if (mode === 'playing' && targetIndex !== null) {
+        pauseAtCheckpoint(targetIndex);
+      }
+    });
+    if (video.readyState >= 1) {
+      pauseAtCheckpoint(0);
+    } else {
+      publish();
+    }
+  }
+
+  document.addEventListener('DOMContentLoaded', initialize, { once: true });
+})();
+</script>
+</head>
+<body>
+<video id="deck" src="deck.mp4" preload="auto" playsinline tabindex="-1"></video>
+</body>
+</html>
